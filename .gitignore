@@ -4,3 +4,7 @@
 *.jar
 *.war
 *.ear
+
+# Project Files #
+teste.log
+teste.properties
