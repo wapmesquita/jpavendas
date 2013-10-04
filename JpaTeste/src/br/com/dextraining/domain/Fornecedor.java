@@ -1,54 +1,40 @@
 package br.com.dextraining.domain;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-public class Fornecedor extends AbstractEntity {
+@DiscriminatorValue("fornecedor")
+public class Fornecedor extends Pessoa {
 
-	private String nome;
-	private String telefone;
-	private String nomeResponsavel;
-	private String cidade;
-	private UF estado;
+    public String cnpj;
 
-	public String getNome() {
-		return nome;
-	}
+    public String nomeResponsavel;
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public String ramal;
 
-	public String getTelefone() {
-		return telefone;
-	}
+    public String getCnpj() {
+        return cnpj;
+    }
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
 
-	public String getNomeResponsavel() {
-		return nomeResponsavel;
-	}
+    public String getNomeResponsavel() {
+        return nomeResponsavel;
+    }
 
-	public void setNomeResponsavel(String nomeResponsavel) {
-		this.nomeResponsavel = nomeResponsavel;
-	}
+    public void setNomeResponsavel(String nomeResponsavel) {
+        this.nomeResponsavel = nomeResponsavel;
+    }
 
-	public String getCidade() {
-		return cidade;
-	}
+    public String getRamal() {
+        return ramal;
+    }
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public UF getEstado() {
-		return estado;
-	}
-
-	public void setEstado(UF estado) {
-		this.estado = estado;
-	}
+    public void setRamal(String ramal) {
+        this.ramal = ramal;
+    }
 
 }

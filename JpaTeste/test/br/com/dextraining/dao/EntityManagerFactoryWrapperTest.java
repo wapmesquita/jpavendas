@@ -5,26 +5,26 @@ import javax.persistence.EntityManager;
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.com.dextraining.domain.Pessoa;
+import br.com.dextraining.domain.Usuario;
 
 public class EntityManagerFactoryWrapperTest {
 
-	@Test
-	public void testaEntityManager() {
-		EntityManager em = EntityManagerFactoryWrapper.getEntityManager();
+    @Test
+    public void testaEntityManager() {
+        EntityManager em = EntityManagerFactoryWrapper.getEntityManager();
 
-		Pessoa pessoa = new Pessoa();
-		pessoa.setNome("walter");
-		pessoa.setCpf("999.999.999-99");
+        Usuario user = new Usuario();
+        user.setLogin("teste");
+        user.setSenha("teste");
 
-//		em.getTransaction().begin();
-		EntityManagerFactoryWrapper.init();
-		em.persist(pessoa);
-		EntityManagerFactoryWrapper.commit();
-//		em.getTransaction().commit();
+        // em.getTransaction().begin();
+        EntityManagerFactoryWrapper.init();
+        em.persist(user);
+        EntityManagerFactoryWrapper.commit();
+        // em.getTransaction().commit();
 
-		Pessoa pessoaEncontrada = em.find(Pessoa.class, pessoa.id);
+        Usuario userFound = em.find(Usuario.class, user.id);
 
-		Assert.assertEquals(pessoa, pessoaEncontrada);
-	}
+        Assert.assertEquals(user, userFound);
+    }
 }

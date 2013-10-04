@@ -1,87 +1,56 @@
 package br.com.dextraining.domain;
 
-import java.util.Date;
-
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @Table(name = "TABELA_PESSOA")
-public class Pessoa extends AbstractEntity {
+@DiscriminatorColumn(name = "tipoPessoa")
+public abstract class Pessoa extends AbstractEntity {
 
-	@Column(name = "NOME_T", nullable = false)
-	private String nome;
-	@Column(unique = true, nullable = false)
-	private String cpf;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataNascimento;
-	@Column(length = 80)
-	private String rua;
-	@Enumerated(EnumType.STRING)
-	private UF estado;
+    @Column(name = "NOME_T", nullable = false)
+    private String nome;
 
-	public String getCpf() {
-		return cpf;
-	}
+    @Column(length = 20)
+    private String telefone;
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
+    @Embedded
+    @AttributeOverrides({ @AttributeOverride(name = "estado", column = @Column(name = "UF")) })
+    private Endereco endereco;
 
-	private String cidade;
-	private String telefone;
+    public String getNome() {
+        return nome;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public String getTelefone() {
+        return telefone;
+    }
 
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
 
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
+    public Endereco getEndereco() {
+        if (endereco == null) {
+            this.endereco = new Endereco();
+        }
+        return endereco;
+    }
 
-	public String getRua() {
-		return rua;
-	}
-
-	public void setRua(String rua) {
-		this.rua = rua;
-	}
-
-	public UF getEstado() {
-		return estado;
-	}
-
-	public void setEstado(UF estado) {
-		this.estado = estado;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
 }
