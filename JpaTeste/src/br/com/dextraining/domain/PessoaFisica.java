@@ -1,15 +1,13 @@
 package br.com.dextraining.domain;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 
-@Entity
-@DiscriminatorValue("pessoaFisica")
-public class PessoaFisica extends Pessoa {
+@MappedSuperclass
+public abstract class PessoaFisica extends Pessoa {
 
-    @Column(length = 20)
-    public String cpf;
+    @Column(length = 20, nullable = false)
+    private String cpf;
 
     public String getCpf() {
         return cpf;

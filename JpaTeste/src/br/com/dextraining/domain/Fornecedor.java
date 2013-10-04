@@ -1,14 +1,15 @@
 package br.com.dextraining.domain;
 
-import javax.persistence.DiscriminatorValue;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("fornecedor")
 public class Fornecedor extends Pessoa {
 
+    @Column(nullable = false)
     public String cnpj;
 
+    @Column(nullable = false)
     public String nomeResponsavel;
 
     public String ramal;

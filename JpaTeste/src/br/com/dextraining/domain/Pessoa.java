@@ -3,18 +3,11 @@ package br.com.dextraining.domain;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 
-@Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@Table(name = "TABELA_PESSOA")
-@DiscriminatorColumn(name = "tipoPessoa")
-public abstract class Pessoa extends AbstractEntity {
+@MappedSuperclass
+public class Pessoa extends AbstractEntity {
 
     @Column(name = "NOME_T", nullable = false)
     private String nome;
