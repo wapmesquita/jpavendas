@@ -13,7 +13,7 @@ import br.com.dextraining.domain.AbstractEntity;
 
 public class GenericDao<T extends AbstractEntity> {
 
-	protected EntityManager em = EntityManagerFactoryWrapper.getEntityManager();
+	private EntityManager em = EntityManagerFactoryWrapper.getEntityManager();
 	private final boolean gerenciaTransacao;
 	private final Class<T> clazz;
 
@@ -24,6 +24,18 @@ public class GenericDao<T extends AbstractEntity> {
 
 	public GenericDao(Class<T> clazz) {
 		this(clazz, false);
+	}
+
+	protected EntityManager getEm() {
+		return em;
+	}
+
+	protected boolean isGerenciaTransacao() {
+		return gerenciaTransacao;
+	}
+
+	protected Class<T> getClazz() {
+		return clazz;
 	}
 
 	protected void init() {
