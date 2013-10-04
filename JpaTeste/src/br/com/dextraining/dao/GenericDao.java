@@ -11,17 +11,19 @@ import javax.persistence.TypedQuery;
 
 import br.com.dextraining.domain.AbstractEntity;
 
-public abstract class AbstractDao<T extends AbstractEntity> {
+public class GenericDao<T extends AbstractEntity> {
 
 	protected EntityManager em = EntityManagerFactoryWrapper.getEntityManager();
 	private final boolean gerenciaTransacao;
+	private final Class<T> clazz;
 
-	public AbstractDao(boolean gerenciaTransacao) {
+	public GenericDao(Class<T> clazz, boolean gerenciaTransacao) {
+		this.clazz = clazz;
 		this.gerenciaTransacao = gerenciaTransacao;
 	}
 
-	public AbstractDao() {
-		this(false);
+	public GenericDao(Class<T> clazz) {
+		this(clazz, false);
 	}
 
 	protected void init() {
@@ -55,24 +57,18 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		this.commit();
 	}
 
-	public abstract T buscarPorId(Long id);
-
-	protected T buscarPorId(Class<T> clazz, Long id) {
+	public T buscarPorId(Long id) {
 		return em.find(clazz, id);
 	}
 
 	@SuppressWarnings("unchecked")
-	protected List<T> buscarTodos(Class<T> clazz) {
+	public List<T> buscarTodos() {
 		String jpql = "from " + clazz.getSimpleName();
 		Query qry = em.createQuery(jpql);
 		return qry.getResultList();
 	}
 
-	public abstract List<T> buscarTodos();
-
-	public abstract List<T> buscarPorFiltro(Map<String, Object> filtro);
-
-	protected List<T> buscarPorFiltro(Class<T> clazz, Map<String, Object> filtro) {
+	public List<T> buscarPorFiltro(Map<String, Object> filtro) {
 		StringBuilder sb = new StringBuilder("FROM ").append(
 				clazz.getSimpleName()).append(" t");
 		if (filtro != null && !filtro.isEmpty()) {
@@ -96,4 +92,5 @@ public abstract class AbstractDao<T extends AbstractEntity> {
 		}
 		return qry.getResultList();
 	}
+
 }
