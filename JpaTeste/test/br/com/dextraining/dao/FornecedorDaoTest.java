@@ -1,6 +1,8 @@
 package br.com.dextraining.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,6 +38,13 @@ public class FornecedorDaoTest {
         List<Fornecedor> list = dao.buscarOrdenadoPorEstado("For");
         Assert.assertTrue(list.size() > 1);
         Assert.assertEquals(f2, list.get(0));
+        
+        Map<String, Object> filtros = new HashMap<String, Object>();
+        filtros.put("nomeResponsavel", "JOAO");
+        filtros.put("cnpj", "123451234523453");
+        
+        List<Fornecedor> buscarPorFiltro = dao.buscarPorFiltro(filtros);
+        Assert.assertTrue(buscarPorFiltro.size() == 2);
 
     }
 

@@ -4,11 +4,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import br.com.dextraining.domain.Usuario;
+import br.com.dextraining.exception.AuthenticateException;
 
 public class UsuarioDaoTest {
 
 	@Test
-	public void testAutenticacao() {
+	public void testAutenticacao() throws AuthenticateException {
 		Usuario u = new Usuario();
 		u.setLogin("usuario");
 		u.setSenha("senha");
