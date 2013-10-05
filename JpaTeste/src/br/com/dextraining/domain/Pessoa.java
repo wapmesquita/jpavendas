@@ -1,13 +1,11 @@
 package br.com.dextraining.domain;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class Pessoa extends AbstractEntity {
+public abstract class Pessoa extends AbstractEntity {
 
     @Column(name = "NOME_T", nullable = false)
     private String nome;
@@ -16,9 +14,8 @@ public class Pessoa extends AbstractEntity {
     private String telefone;
 
     @Embedded
-    @AttributeOverrides({ @AttributeOverride(name = "estado", column = @Column(name = "UF")) })
     private Endereco endereco;
-
+    
     public String getNome() {
         return nome;
     }
