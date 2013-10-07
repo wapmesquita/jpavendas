@@ -24,7 +24,7 @@ public class FornecedorDaoTest {
 
         FornecedorDao dao = new FornecedorDao(true);
         dao.salvar(f);
-        
+
         Fornecedor f2 = new Fornecedor();
         f2.setNome("Fornecedor 2");
         f2.setCnpj("123451234523453");
@@ -32,19 +32,19 @@ public class FornecedorDaoTest {
         f2.getEndereco().setEstado(UF.ES);
         f2.getEndereco().setRua("Rua 1");
         f2.setNomeResponsavel("JOAO");
-        
+
         dao.salvar(f2);
-        
+
         List<Fornecedor> list = dao.buscarOrdenadoPorEstado("For");
         Assert.assertTrue(list.size() > 1);
         Assert.assertEquals(f2, list.get(0));
-        
+
         Map<String, Object> filtros = new HashMap<String, Object>();
         filtros.put("nomeResponsavel", "JOAO");
         filtros.put("cnpj", "123451234523453");
-        
+
         List<Fornecedor> buscarPorFiltro = dao.buscarPorFiltro(filtros);
-        Assert.assertTrue(buscarPorFiltro.size() == 2);
+        Assert.assertEquals(2, buscarPorFiltro.size());
 
     }
 

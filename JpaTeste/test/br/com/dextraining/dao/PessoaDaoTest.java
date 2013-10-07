@@ -19,7 +19,7 @@ public class PessoaDaoTest {
         f.getEndereco().setCidade("Campinas");
         f.getEndereco().setEstado(UF.SP);
         f.getEndereco().setRua("Rua 1");
-        f.setNomeResponsavel("JOAO");
+        f.setNomeResponsavel("Mario");
 
         GenericDao<Fornecedor> dao = new GenericDao<Fornecedor>(Fornecedor.class, true);
         dao.salvar(f);
@@ -40,7 +40,7 @@ public class PessoaDaoTest {
         f.getEndereco().setCidade("Campinas");
         f.getEndereco().setEstado(UF.SP);
         f.getEndereco().setRua("Rua 1");
-        f.setNomeResponsavel("JOAO");
+        f.setNomeResponsavel("Maria");
 
         GenericDao<Fornecedor> dao = new GenericDao<Fornecedor>(Fornecedor.class, true);
         dao.salvar(f);
