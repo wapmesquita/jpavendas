@@ -12,7 +12,7 @@ public class Produto extends AbstractEntity {
     @Column(length = 255)
     private String descricao;
 
-    @Column(nullable = false, precision = 2)
+    @Column(nullable = false, precision = 2, scale = 2)
     private Double valor;
 
     @Column(nullable = false)

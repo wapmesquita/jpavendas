@@ -55,7 +55,7 @@ public class GenericDao<T extends AbstractEntity> {
 
 	public void salvar(T value) {
 		this.init();
-		if (value.id == null) {
+		if (value.getId() == null) {
 			em.persist(value);
 		} else {
 			em.merge(value);

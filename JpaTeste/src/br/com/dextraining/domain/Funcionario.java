@@ -1,5 +1,6 @@
 package br.com.dextraining.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -7,7 +8,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Funcionario extends PessoaFisica {
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     private Usuario usuario;
 
     @Column

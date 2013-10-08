@@ -23,13 +23,13 @@ public class PessoaDaoTest {
 
         GenericDao<Fornecedor> dao = new GenericDao<Fornecedor>(Fornecedor.class, true);
         dao.salvar(f);
-        System.out.println(f.id);
-        Fornecedor pessoaEncontrada = dao.buscarPorId(f.id);
+        System.out.println(f.getId());
+        Fornecedor pessoaEncontrada = dao.buscarPorId(f.getId());
 
         Assert.assertEquals(f, pessoaEncontrada);
 
         dao.remover(pessoaEncontrada);
-        Assert.assertEquals(null, dao.buscarPorId(f.id));
+        Assert.assertEquals(null, dao.buscarPorId(f.getId()));
     }
 
     @Test
@@ -63,13 +63,13 @@ public class PessoaDaoTest {
 
         GenericDao<Funcionario> dao = new GenericDao<Funcionario>(Funcionario.class, true);
         dao.salvar(p);
-        System.out.println(p.id);
-        Funcionario pessoaEncontrada = dao.buscarPorId(p.id);
+        System.out.println(p.getId());
+        Funcionario pessoaEncontrada = dao.buscarPorId(p.getId());
 
         Assert.assertEquals(p, pessoaEncontrada);
 
         dao.remover(pessoaEncontrada);
-        Assert.assertEquals(null, dao.buscarPorId(p.id));
+        Assert.assertEquals(null, dao.buscarPorId(p.getId()));
 
     }
 }

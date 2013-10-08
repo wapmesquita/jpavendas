@@ -23,7 +23,7 @@ public class EntityManagerFactoryWrapperTest {
         EntityManagerFactoryWrapper.commit();
         // em.getTransaction().commit();
 
-        Usuario userFound = em.find(Usuario.class, user.id);
+        Usuario userFound = em.find(Usuario.class, user.getId());
 
         Assert.assertEquals(user, userFound);
     }
