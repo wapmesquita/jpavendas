@@ -2,14 +2,22 @@ package br.com.dextraining.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Usuario extends AbstractEntity {
 
+    @Column(nullable=false, length=40)
 	private String login;
+
+    @Column(nullable=false, length=20)
 	private String senha;
-	private Date dataUltimoAcesso;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltimoAcesso;
 
 	public String getLogin() {
 		return login;

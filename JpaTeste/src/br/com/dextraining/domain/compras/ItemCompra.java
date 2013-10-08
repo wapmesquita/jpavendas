@@ -1,5 +1,6 @@
 package br.com.dextraining.domain.compras;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -10,7 +11,7 @@ import br.com.dextraining.domain.Produto;
 @Entity
 public class ItemCompra extends AbstractEntity {
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Produto produto;
 
     @Column(nullable = false)

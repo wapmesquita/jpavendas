@@ -1,12 +1,13 @@
 package br.com.dextraining.domain.compras;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Entity
 public class ComprasFornecedor extends Compras {
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.REMOVE)
     private Fornecedor fornecedor;
 
     public Fornecedor getFornecedor() {

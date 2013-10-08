@@ -2,6 +2,7 @@ package br.com.dextraining.domain.compras;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,7 @@ public abstract class Compras {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Long id;
 
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="compra_id")
 	private List<ItemCompra> itens;
 

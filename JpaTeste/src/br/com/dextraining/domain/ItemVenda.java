@@ -7,7 +7,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class ItemVenda extends AbstractEntity {
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, orphanRemoval=true)
     private Produto produto;
 
     @Column(nullable = false)
