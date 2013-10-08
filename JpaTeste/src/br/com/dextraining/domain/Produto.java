@@ -6,42 +6,48 @@ import javax.persistence.Entity;
 @Entity
 public class Produto extends AbstractEntity {
 
-	private String nome;
-	private String descricao;
-	@Column(precision=2)
-	private Double valor;
-	private Integer qntd;
+    @Column(nullable = false, length = 100)
+    private String nome;
 
-	public String getNome() {
-		return nome;
-	}
+    @Column(length = 255)
+    private String descricao;
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    @Column(nullable = false, precision = 2)
+    private Double valor;
 
-	public String getDescricao() {
-		return descricao;
-	}
+    @Column(nullable = false)
+    private Integer qntd;
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public Double getValor() {
-		return valor;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setValor(Double valor) {
-		this.valor = valor;
-	}
+    public String getDescricao() {
+        return descricao;
+    }
 
-	public Integer getQntd() {
-		return qntd;
-	}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-	public void setQntd(Integer qntd) {
-		this.qntd = qntd;
-	}
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public Integer getQntd() {
+        return qntd;
+    }
+
+    public void setQntd(Integer qntd) {
+        this.qntd = qntd;
+    }
 
 }

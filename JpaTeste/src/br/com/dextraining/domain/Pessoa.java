@@ -15,7 +15,7 @@ public abstract class Pessoa extends AbstractEntity {
 
     @Embedded
     private Endereco endereco;
-    
+
     public String getNome() {
         return nome;
     }

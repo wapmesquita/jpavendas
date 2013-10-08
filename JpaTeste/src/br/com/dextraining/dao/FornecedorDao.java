@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
-import br.com.dextraining.domain.Fornecedor;
+import br.com.dextraining.domain.compras.Fornecedor;
 
 public class FornecedorDao extends PessoaDao<Fornecedor> {
 

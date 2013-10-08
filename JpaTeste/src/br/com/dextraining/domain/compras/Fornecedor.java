@@ -1,10 +1,13 @@
-package br.com.dextraining.domain;
+package br.com.dextraining.domain.compras;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+
+import br.com.dextraining.domain.Endereco;
+import br.com.dextraining.domain.Pessoa;
 
 @Entity
 public class Fornecedor extends Pessoa {

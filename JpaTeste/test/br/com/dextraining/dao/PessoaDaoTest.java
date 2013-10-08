@@ -5,9 +5,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.com.dextraining.domain.Fornecedor;
 import br.com.dextraining.domain.Funcionario;
 import br.com.dextraining.domain.UF;
+import br.com.dextraining.domain.compras.Fornecedor;
 
 public class PessoaDaoTest {
 
