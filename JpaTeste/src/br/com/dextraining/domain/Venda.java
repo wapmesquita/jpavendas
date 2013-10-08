@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -20,6 +21,7 @@ public class Venda extends AbstractEntity {
     private Funcionario funcionario;
 
     @OneToMany
+    @JoinColumn(name="venda_id")
     private List<ItemVenda> itens;
 
     @Temporal(TemporalType.TIMESTAMP)
