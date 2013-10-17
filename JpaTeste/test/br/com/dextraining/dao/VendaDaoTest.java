@@ -43,6 +43,9 @@ public class VendaDaoTest {
         List<Venda> vendasCliente = dao.buscarVendasParaCliente(c.getId());
         Assert.assertEquals(vendasCliente.get(0), venda);
 
+        List<Venda> vendasDoProduto = dao.buscarVendasDoProduto(produtos.get(3));
+        Assert.assertEquals(vendasDoProduto.get(0), venda);
+
         //new FuncionarioDao(true).remover(f);
         dao.remover(venda);
         //new ProdutoDao(true).remover(produtos.get(2));

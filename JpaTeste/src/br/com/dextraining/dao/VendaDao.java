@@ -8,6 +8,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.com.dextraining.domain.ItemVenda;
+import br.com.dextraining.domain.Produto;
 import br.com.dextraining.domain.Venda;
 
 public class VendaDao extends GenericDao<Venda> {
@@ -55,6 +56,21 @@ public class VendaDao extends GenericDao<Venda> {
 		String jpql = "FROM " + getClazz().getSimpleName() + " v WHERE v.cliente.id = :id";
 		TypedQuery<Venda> qry = getEm().createQuery(jpql, getClazz());
 		qry.setParameter("id", clienteId);
+		try {
+			return qry.getResultList();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+			return Collections.emptyList();
+		}
+	}
+
+	public List<Venda> buscarVendasDoProduto(Produto produto) {
+		StringBuilder jpql = new StringBuilder("SELECT venda FROM ");
+		jpql.append(getClazz().getSimpleName()).append(" venda INNER JOIN venda.itens item ");
+		jpql.append(" WHERE item.produto = :produto");
+
+		TypedQuery<Venda> qry = getEm().createQuery(jpql.toString(), getClazz());
+		qry.setParameter("produto", produto);
 		try {
 			return qry.getResultList();
 		} catch (NoResultException e) {
