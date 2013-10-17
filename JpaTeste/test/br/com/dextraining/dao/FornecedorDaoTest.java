@@ -7,7 +7,9 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import br.com.dextraining.domain.Funcionario;
 import br.com.dextraining.domain.UF;
+import br.com.dextraining.domain.Usuario;
 import br.com.dextraining.domain.compras.Fornecedor;
 
 public class FornecedorDaoTest {
@@ -46,6 +48,33 @@ public class FornecedorDaoTest {
         List<Fornecedor> buscarPorFiltro = dao.buscarPorFiltro(filtros);
         Assert.assertEquals(2, buscarPorFiltro.size());
 
+    }
+
+    @Test
+    public void buscarPorUsuario() {
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome("JOAO");
+        funcionario.getEndereco().setCidade("Campinas");
+        funcionario.getEndereco().setEstado(UF.SP);
+        funcionario.getEndereco().setRua("Rua 1");
+        funcionario.setCpf("111.111.111-11");
+        funcionario.setSalario(1559.80);
+
+        Usuario u = new Usuario();
+		String login = "usuarioFuncionario";
+		u.setLogin(login);
+		u.setSenha("senha");
+		u.setFuncionario(funcionario);
+
+		UsuarioDao dao = new UsuarioDao(true);
+		dao.salvar(u);
+
+		FuncionarioDao fDao = new FuncionarioDao(true);
+		Funcionario porUsuario = fDao.buscarPorUsuario(login);
+		Assert.assertEquals(u.getFuncionario(), porUsuario);
+
+		Funcionario buscarFuncionarioPorUsuario = dao.buscarFuncionarioPorUsuario(login);
+		Assert.assertEquals(buscarFuncionarioPorUsuario, porUsuario);
     }
 
 }

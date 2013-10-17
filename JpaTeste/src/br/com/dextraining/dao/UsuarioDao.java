@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import br.com.dextraining.domain.Funcionario;
 import br.com.dextraining.domain.Usuario;
 import br.com.dextraining.exception.AuthenticateException;
 
@@ -35,5 +36,19 @@ public class UsuarioDao extends GenericDao<Usuario> {
 	public Usuario atualizarDataLogin(Usuario user) {
 		user.setDataUltimoAcesso(new Date());
 		return getEm().merge(user);
+	}
+
+	public Funcionario buscarFuncionarioPorUsuario(String login) {
+		String jpql = "SELECT u.funcionario FROM " + getClazz().getSimpleName()
+				+ " u WHERE u.login = :login";
+		TypedQuery<Funcionario> qry = getEm().createQuery(jpql, Funcionario.class);
+		qry.setParameter("login", login);
+		try {
+			return qry.getSingleResult();
+		} catch (NoResultException e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 }
