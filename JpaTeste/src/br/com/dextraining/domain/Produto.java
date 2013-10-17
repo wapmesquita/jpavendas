@@ -1,7 +1,13 @@
+
 package br.com.dextraining.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Produto extends AbstractEntity {
@@ -17,6 +23,9 @@ public class Produto extends AbstractEntity {
 
     @Column(nullable = false)
     private Integer qntd;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    private List<Categoria> categoria;
 
     public String getNome() {
         return nome;
@@ -50,4 +59,18 @@ public class Produto extends AbstractEntity {
         this.qntd = qntd;
     }
 
+	public List<Categoria> getCategoria() {
+		if (categoria == null) {
+			categoria = new ArrayList<Categoria>();
+		}
+		return categoria;
+	}
+
+	public void addCategoria(Categoria categoria) {
+		getCategoria().add(categoria);
+	}
+
+	public void removeCategoria(Categoria categoria) {
+		getCategoria().remove(categoria);
+	}
 }
