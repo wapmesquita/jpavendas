@@ -84,7 +84,10 @@ public class ProdutoDaoTest {
 
 		GenericDao<Categoria> categoriaDao = new GenericDao<Categoria>(Categoria.class, true);
 		Categoria cat = categoriaDao.buscarPorId(p1.getCategoria().get(0).getId());
-		categoriaDao.remover(cat);
 
+		p1.removeCategoria(cat);
+		dao.salvar(p1);
+
+		categoriaDao.remover(cat);
 	}
 }
