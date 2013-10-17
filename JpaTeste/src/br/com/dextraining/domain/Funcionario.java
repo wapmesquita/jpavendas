@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Funcionario extends PessoaFisica {
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.REMOVE)
     private Usuario usuario;
 
     @Column

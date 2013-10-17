@@ -10,7 +10,6 @@ import br.com.dextraining.domain.Funcionario;
 import br.com.dextraining.domain.ItemVenda;
 import br.com.dextraining.domain.Produto;
 import br.com.dextraining.domain.UF;
-import br.com.dextraining.domain.Usuario;
 import br.com.dextraining.domain.Venda;
 
 
@@ -74,12 +73,7 @@ public class VendaDaoTest {
     }
 
     private Funcionario cadastrarFuncionario() {
-        Usuario u = new Usuario();
-        u.setLogin("joao.silva");
-        u.setSenha("joao");
-
         Funcionario f = new Funcionario();
-        f.setUsuario(u);
         f.setNome("Joao Silva");
         f.setMatricula("123412341");
         f.setSalario(4502.65);
