@@ -28,11 +28,19 @@ public class UsuarioDaoTest {
 		UsuarioDao dao = new UsuarioDao(true);
 		dao.salvar(u);
 
+		Usuario usuarioBuscado = dao.buscarPorId(u.getId());
+		System.out.println(usuarioBuscado.getLogin());
+
 		Usuario autenticado = dao.autenticarUsuario("usuario", "senha");
-		Assert.assertEquals(u, autenticado);
 
 		autenticado = dao.atualizarDataLogin(autenticado);
 
 		Assert.assertNotNull(autenticado.getDataUltimoAcesso());
+
+		FuncionarioDao funcDao = new FuncionarioDao(true);
+		Funcionario f = funcDao.buscarPorId(u.getFuncionario().getId());
+
+		Assert.assertEquals(u.getFuncionario(), f);
+
 	}
 }
