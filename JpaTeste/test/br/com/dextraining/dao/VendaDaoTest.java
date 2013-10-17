@@ -3,6 +3,7 @@ package br.com.dextraining.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import br.com.dextraining.domain.Cliente;
@@ -35,6 +36,12 @@ public class VendaDaoTest {
 
         Venda id = dao.buscarPorId(venda.getId());
         System.out.println(id.toString());
+
+        List<Venda> vendasFuncionario = dao.buscarVendasDoFuncionario(f.getId());
+        Assert.assertEquals(vendasFuncionario.get(0), venda);
+
+        List<Venda> vendasCliente = dao.buscarVendasParaCliente(c.getId());
+        Assert.assertEquals(vendasCliente.get(0), venda);
 
         //new FuncionarioDao(true).remover(f);
         dao.remover(venda);
