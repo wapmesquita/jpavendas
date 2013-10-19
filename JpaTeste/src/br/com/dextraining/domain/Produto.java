@@ -23,7 +23,7 @@ public class Produto extends AbstractEntity {
 	@Column(nullable = false)
 	private Integer qntd;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	private List<Categoria> categoria;
 
 	public String getNome() {

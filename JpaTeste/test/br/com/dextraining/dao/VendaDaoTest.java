@@ -28,7 +28,7 @@ public class VendaDaoTest {
 
         ItemVenda item = null;
         for (int i=8; i>=2; i--) {
-            item = new ItemVenda(produtos.get(i), i*2, 0.13*i*1.34);
+            item = new ItemVenda(venda, produtos.get(i), i*2, 0.13*i*1.34);
             venda.addItem(item);
         }
 
@@ -36,7 +36,7 @@ public class VendaDaoTest {
         
         Venda venda2 = new Venda(null, f);
         
-        venda2.addItem(new ItemVenda(produtos.get(5), 1, 0.0));
+        venda2.addItem(new ItemVenda(venda2, produtos.get(5), 1, 0.0));
         
         dao.salvar(venda2);
         

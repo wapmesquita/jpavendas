@@ -19,16 +19,20 @@ public class ItemVenda extends AbstractEntity {
 	@Column(nullable = false, precision = 2, scale = 2)
 	private Double valorFinal;
 
+	@ManyToOne
+	private Venda venda;
+
 	public ItemVenda() {
 		// Metodo gerado para JPA
 	}
 
-	public ItemVenda(Produto produto, Integer qntd) {
-		this(produto, qntd, 0.0);
+	public ItemVenda(Venda venda, Produto produto, Integer qntd) {
+		this(venda, produto, qntd, 0.0);
 	}
 
-	public ItemVenda(Produto produto, Integer qntd, Double valorDesconto) {
+	public ItemVenda(Venda venda, Produto produto, Integer qntd, Double valorDesconto) {
 		super();
+		this.venda = venda;
 		this.produto = produto;
 		this.qntd = qntd;
 		this.valorDesconto = valorDesconto;
@@ -49,6 +53,14 @@ public class ItemVenda extends AbstractEntity {
 
 	public Double getValorFinal() {
 		return valorFinal;
+	}
+
+	public Venda getVenda() {
+		return venda;
+	}
+
+	public void setVenda(Venda venda) {
+		this.venda = venda;
 	}
 
 }
