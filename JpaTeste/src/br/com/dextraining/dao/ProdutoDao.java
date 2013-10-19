@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.com.dextraining.domain.Produto;
+import br.com.dextraining.domain.QuantidadeDeProdutosIndisponiveis;
 
 public class ProdutoDao extends GenericDao<Produto> {
 
@@ -56,14 +57,20 @@ public class ProdutoDao extends GenericDao<Produto> {
 		}
 	}
 
+	@Deprecated
 	public void atualizaQuantidade(Long id, Integer value) {
-	    String jpql = "update " + Produto.class.getSimpleName() + " p set p.qntd = p.qntd - :qntd where p.id = :id";
-	    Query qry = getEm().createQuery(jpql);
+	    //String jpql = "update " + Produto.class.getSimpleName() + " p set p.qntd = p.qntd - :qntd where p.id = :id";
+	    Query qry = getEm().createNativeQuery("update Produto p set p.qntd = p.qntd - :qntd where p.id = :id");
 	    qry.setParameter("qntd", value);
 	    qry.setParameter("id", id);
 	    int result = qry.executeUpdate();
 	    if (result != 1) {
 	        throw new RuntimeException("erro ao atualizar produto");
 	    }
+	}
+
+	public void atualizaQuantidade(Produto produto, Integer value) throws QuantidadeDeProdutosIndisponiveis {
+		produto.baixaEstoque(value);		
+		getEm().merge(produto);
 	}
 }

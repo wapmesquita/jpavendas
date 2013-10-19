@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Produto extends AbstractEntity {
@@ -71,5 +72,14 @@ public class Produto extends AbstractEntity {
 
 	public void removeCategoria(Categoria categoria) {
 		getCategorias().remove(categoria);
+	}
+
+	@Transient
+	public void baixaEstoque(Integer qntd) throws QuantidadeDeProdutosIndisponiveis {
+		this.qntd -= qntd;
+		if (this.qntd < 0) {
+			throw new QuantidadeDeProdutosIndisponiveis();
+		}
+		
 	}
 }

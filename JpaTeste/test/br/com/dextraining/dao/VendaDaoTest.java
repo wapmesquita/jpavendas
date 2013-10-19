@@ -34,11 +34,17 @@ public class VendaDaoTest {
 
         dao.salvar(venda);
         
+        ProdutoDao produtoDao = new ProdutoDao();
+		Produto produtoVenda2 = produtoDao.buscarPorId(produtos.get(5).getId());
+		int qntdProdutoVenda2 = produtoVenda2.getQntd();
+        
         Venda venda2 = new Venda(null, f);
         
-        venda2.addItem(new ItemVenda(venda2, produtos.get(5), 1, 0.0));
+        venda2.addItem(new ItemVenda(venda2, produtoVenda2, 1, 0.0));
         
         dao.salvar(venda2);
+        
+        Assert.assertEquals(new Integer(qntdProdutoVenda2 - 1), produtoDao.buscarPorId(produtoVenda2.getId()).getQntd());
         
         Venda id = dao.buscarPorId(venda.getId());
         System.out.println(id.toString());

@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import br.com.dextraining.domain.ItemVenda;
 import br.com.dextraining.domain.Produto;
+import br.com.dextraining.domain.QuantidadeDeProdutosIndisponiveis;
 import br.com.dextraining.domain.Venda;
 
 public class VendaDao extends GenericDao<Venda> {
@@ -31,7 +32,11 @@ public class VendaDao extends GenericDao<Venda> {
 		ProdutoDao produtoDao = new ProdutoDao(false);
 
 		for (ItemVenda item : venda.getItens()) {
-			produtoDao.atualizaQuantidade(item.getProduto().getId(), item.getQntd());
+			try {
+				produtoDao.atualizaQuantidade(item.getProduto(), item.getQntd());
+			} catch (QuantidadeDeProdutosIndisponiveis e) {
+				throw new RuntimeException(e);
+			}
 		}
 
 		venda.setData(new Date());
