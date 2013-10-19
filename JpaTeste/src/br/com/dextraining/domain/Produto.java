@@ -1,4 +1,3 @@
-
 package br.com.dextraining.domain;
 
 import java.util.ArrayList;
@@ -12,54 +11,54 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Produto extends AbstractEntity {
 
-    @Column(nullable = false, length = 100)
-    private String nome;
+	@Column(nullable = false, length = 100)
+	private String nome;
 
-    @Column(length = 255)
-    private String descricao;
+	@Column(length = 255)
+	private String descricao;
 
-    @Column(nullable = false, precision = 2, scale = 2)
-    private Double valor;
+	@Column(nullable = false, precision = 2, scale = 2)
+	private Double valor;
 
-    @Column(nullable = false)
-    private Integer qntd;
+	@Column(nullable = false)
+	private Integer qntd;
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    private List<Categoria> categoria;
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Categoria> categoria;
 
-    public String getNome() {
-        return nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public String getDescricao() {
+		return descricao;
+	}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
-    public Double getValor() {
-        return valor;
-    }
+	public Double getValor() {
+		return valor;
+	}
 
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
 
-    public Integer getQntd() {
-        return qntd;
-    }
+	public Integer getQntd() {
+		return qntd;
+	}
 
-    public void setQntd(Integer qntd) {
-        this.qntd = qntd;
-    }
+	public void setQntd(Integer qntd) {
+		this.qntd = qntd;
+	}
 
-	public List<Categoria> getCategoria() {
+	public List<Categoria> getCategorias() {
 		if (categoria == null) {
 			categoria = new ArrayList<Categoria>();
 		}
@@ -67,10 +66,10 @@ public class Produto extends AbstractEntity {
 	}
 
 	public void addCategoria(Categoria categoria) {
-		getCategoria().add(categoria);
+		getCategorias().add(categoria);
 	}
 
 	public void removeCategoria(Categoria categoria) {
-		getCategoria().remove(categoria);
+		getCategorias().remove(categoria);
 	}
 }

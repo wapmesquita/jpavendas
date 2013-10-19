@@ -33,7 +33,13 @@ public class VendaDaoTest {
         }
 
         dao.salvar(venda);
-
+        
+        Venda venda2 = new Venda(null, f);
+        
+        venda2.addItem(new ItemVenda(produtos.get(5), 1, 0.0));
+        
+        dao.salvar(venda2);
+        
         Venda id = dao.buscarPorId(venda.getId());
         System.out.println(id.toString());
 

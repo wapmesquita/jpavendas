@@ -25,6 +25,7 @@ public class UsuarioDaoTest {
 		u.setSenha("senha");
 		u.setFuncionario(funcionario);
 
+		FuncionarioDao funcDao = new FuncionarioDao(true);
 		UsuarioDao dao = new UsuarioDao(true);
 		dao.salvar(u);
 
@@ -37,7 +38,6 @@ public class UsuarioDaoTest {
 
 		Assert.assertNotNull(autenticado.getDataUltimoAcesso());
 
-		FuncionarioDao funcDao = new FuncionarioDao(true);
 		Funcionario f = funcDao.buscarPorId(u.getFuncionario().getId());
 
 		Assert.assertEquals(u.getFuncionario(), f);

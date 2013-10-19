@@ -18,73 +18,73 @@ import flexjson.JSONSerializer;
 @Entity
 public class Venda extends AbstractEntity {
 
-    @ManyToOne(optional = true)
-    private Cliente cliente;
+	@ManyToOne(optional = true)
+	private Cliente cliente;
 
-    @ManyToOne(optional = false)
-    private Funcionario funcionario;
+	@ManyToOne(optional = false)
+	private Funcionario funcionario;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "venda_id")
-    private List<ItemVenda> itens;
+	@OneToMany()
+	@JoinColumn(name = "venda_id")
+	private List<ItemVenda> itens;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date data;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date data;
 
-    @Column(nullable = false, precision = 2, scale = 2)
-    private Double valor = 0.0;
+	@Column(nullable = false, precision = 2, scale = 2)
+	private Double valor = 0.0;
 
-    public Venda(Cliente cliente, Funcionario funcionario) {
-        super();
-        this.cliente = cliente;
-        this.funcionario = funcionario;
-    }
+	public Venda(Cliente cliente, Funcionario funcionario) {
+		super();
+		this.cliente = cliente;
+		this.funcionario = funcionario;
+	}
 
-    public Venda() {
-        // Metodo gerado para jpa
-    }
+	public Venda() {
+		// Metodo gerado para jpa
+	}
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+	public Cliente getCliente() {
+		return cliente;
+	}
 
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
 
-    public List<ItemVenda> getItens() {
-        if (itens == null) {
-            itens = new ArrayList<ItemVenda>();
-        }
-        return itens;
-    }
+	public List<ItemVenda> getItens() {
+		if (itens == null) {
+			itens = new ArrayList<ItemVenda>();
+		}
+		return itens;
+	}
 
-    public void addItem(ItemVenda item) {
-        getItens().add(item);
-        this.valor += item.getValorFinal();
-    }
+	public void addItem(ItemVenda item) {
+		getItens().add(item);
+		this.valor += item.getValorFinal();
+	}
 
-    public void removeItem(ItemVenda item) {
-        getItens().remove(item);
-        this.valor -= item.getValorFinal();
-    }
+	public void removeItem(ItemVenda item) {
+		getItens().remove(item);
+		this.valor -= item.getValorFinal();
+	}
 
-    public Date getData() {
-        return data;
-    }
+	public Date getData() {
+		return data;
+	}
 
-    public Double getValor() {
-        return valor;
-    }
+	public Double getValor() {
+		return valor;
+	}
 
-    public void setData(Date data) {
-        this.data = data;
-    }
+	public void setData(Date data) {
+		this.data = data;
+	}
 
-    @Override
-    public String toString() {
-        JSONSerializer serializer = new JSONSerializer();
-        serializer.exclude("*.class");
-        return serializer.deepSerialize(this);
-    }
+	@Override
+	public String toString() {
+		JSONSerializer serializer = new JSONSerializer();
+		serializer.exclude("*.class");
+		return serializer.deepSerialize(this);
+	}
 }
