@@ -9,8 +9,8 @@ import javax.persistence.TypedQuery;
 
 import br.com.dextraining.domain.ItemVenda;
 import br.com.dextraining.domain.Produto;
-import br.com.dextraining.domain.QuantidadeDeProdutosIndisponiveis;
 import br.com.dextraining.domain.Venda;
+import br.com.dextraining.exception.QuantidadeDeProdutosIndisponiveis;
 
 public class VendaDao extends GenericDao<Venda> {
 

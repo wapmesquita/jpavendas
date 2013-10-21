@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
+import br.com.dextraining.exception.QuantidadeDeProdutosIndisponiveis;
+
 @Entity
 public class Produto extends AbstractEntity {
 
@@ -80,6 +82,6 @@ public class Produto extends AbstractEntity {
 		if (this.qntd < 0) {
 			throw new QuantidadeDeProdutosIndisponiveis();
 		}
-		
+
 	}
 }

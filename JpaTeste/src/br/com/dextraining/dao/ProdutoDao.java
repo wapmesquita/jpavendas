@@ -8,7 +8,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.com.dextraining.domain.Produto;
-import br.com.dextraining.domain.QuantidadeDeProdutosIndisponiveis;
+import br.com.dextraining.exception.QuantidadeDeProdutosIndisponiveis;
 
 public class ProdutoDao extends GenericDao<Produto> {
 
@@ -70,7 +70,7 @@ public class ProdutoDao extends GenericDao<Produto> {
 	}
 
 	public void atualizaQuantidade(Produto produto, Integer value) throws QuantidadeDeProdutosIndisponiveis {
-		produto.baixaEstoque(value);		
+		produto.baixaEstoque(value);
 		getEm().merge(produto);
 	}
 }
