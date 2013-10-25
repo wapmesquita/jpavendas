@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 
@@ -26,7 +27,7 @@ public class Produto extends AbstractEntity {
 	@Column(nullable = false)
 	private Integer qntd;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	private List<Categoria> categoria;
 
 	public String getNome() {

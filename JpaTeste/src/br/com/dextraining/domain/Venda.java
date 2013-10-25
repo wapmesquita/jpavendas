@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -17,13 +18,13 @@ import flexjson.JSONSerializer;
 @Entity
 public class Venda extends AbstractEntity {
 
-	@ManyToOne(optional = true, cascade=CascadeType.PERSIST)
+	@ManyToOne(optional = true, cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
 	private Cliente cliente;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch=FetchType.LAZY)
 	private Funcionario funcionario;
 
-	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<ItemVenda> itens;
 
 	@Temporal(TemporalType.DATE)

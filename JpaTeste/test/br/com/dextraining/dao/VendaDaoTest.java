@@ -49,24 +49,35 @@ public class VendaDaoTest {
 
 		Assert.assertEquals(new Integer(qntdProdutoVenda2 - 1), produtoDao.buscarPorId(produtoVenda2.getId()).getQntd());
 
-		Venda id = dao.buscarPorId(venda.getId());
-		System.out.println(id.toString());
+		Venda buscarPorId = dao.buscarPorId(venda.getId());
+		System.out.println(buscarPorId.toString());
 
+		EntityManagerFactoryWrapper.renovar();
+
+		System.out.println("Simulando Lazy");
+		buscarPorId = dao.buscarPorId(1L);
+		Assert.assertNotNull(buscarPorId);
+
+		System.out.println("Buscar por Funcionario");
 		List<Venda> vendasFuncionario = dao.buscarVendasDoFuncionario(f.getId());
-		Assert.assertEquals(vendasFuncionario.get(0), venda);
+		Assert.assertEquals(vendasFuncionario.get(0), buscarPorId);
+		Assert.assertEquals(7, vendasFuncionario.get(0).getItens().size());
 
+		System.out.println("Buscar por Cliente");
 		List<Venda> vendasCliente = dao.buscarVendasParaCliente(c.getId());
-		Assert.assertEquals(vendasCliente.get(0), venda);
+		Assert.assertEquals(vendasCliente.get(0), buscarPorId);
 
+		System.out.println("Buscar por Produto");
 		List<Venda> vendasDoProduto = dao.buscarVendasDoProduto(produtos.get(3));
-		Assert.assertEquals(vendasDoProduto.get(0), venda);
+		Assert.assertEquals(vendasDoProduto.get(0), buscarPorId);
 
+		System.out.println("Buscar por Acumuladas");
 		List<VendaAcumuladaData> acumuladas = dao.buscarVendaAcumuladas(getOutraDate(-1), getOutraDate(1));
 		Assert.assertEquals(1, acumuladas.size());
 		Assert.assertEquals(new Double(1572.8948000000003), acumuladas.get(0).getValor());
 
 		// new FuncionarioDao(true).remover(f);
-		dao.remover(venda);
+		dao.remover(buscarPorId);
 		// new ProdutoDao(true).remover(produtos.get(2));
 	}
 

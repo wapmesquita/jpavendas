@@ -13,7 +13,6 @@ import br.com.dextraining.domain.AbstractEntity;
 
 public class GenericDao<T extends AbstractEntity> {
 
-	private EntityManager em = EntityManagerFactoryWrapper.getEntityManager();
 	private final boolean gerenciaTransacao;
 	private final Class<T> clazz;
 
@@ -27,7 +26,7 @@ public class GenericDao<T extends AbstractEntity> {
 	}
 
 	protected EntityManager getEm() {
-		return em;
+		return EntityManagerFactoryWrapper.getEntityManager();
 	}
 
 	protected boolean isGerenciaTransacao() {
@@ -56,27 +55,27 @@ public class GenericDao<T extends AbstractEntity> {
 	public void salvar(T value) {
 		this.init();
 		if (value.getId() == null) {
-			em.persist(value);
+			getEm().persist(value);
 		} else {
-			em.merge(value);
+			getEm().merge(value);
 		}
 		this.commit();
 	}
 
 	public void remover(T value) {
 		this.init();
-		em.remove(value);
+		getEm().remove(value);
 		this.commit();
 	}
 
 	public T buscarPorId(Long id) {
-		return em.find(clazz, id);
+		return getEm().find(clazz, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<T> buscarTodos() {
 		String jpql = "from " + clazz.getSimpleName();
-		Query qry = em.createQuery(jpql);
+		Query qry = getEm().createQuery(jpql);
 		return qry.getResultList();
 	}
 
@@ -96,7 +95,7 @@ public class GenericDao<T extends AbstractEntity> {
 			}
 		}
 
-		TypedQuery<T> qry = em.createQuery(sb.toString(), clazz);
+		TypedQuery<T> qry = getEm().createQuery(sb.toString(), clazz);
 		if (filtro != null && !filtro.isEmpty()) {
 			for (Entry<String, Object> entry : filtro.entrySet()) {
 				qry.setParameter(entry.getKey(), entry.getValue());

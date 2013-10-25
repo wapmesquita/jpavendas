@@ -3,12 +3,13 @@ package br.com.dextraining.domain;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Funcionario extends PessoaFisica {
 
-	@OneToOne(cascade=CascadeType.REMOVE)
+	@OneToOne(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
 	private Usuario usuario;
 
 	@Column

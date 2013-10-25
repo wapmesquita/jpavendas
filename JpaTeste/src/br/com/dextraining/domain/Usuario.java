@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,7 +22,7 @@ public class Usuario extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataUltimoAcesso;
 
-	@OneToOne(optional = false, cascade=CascadeType.PERSIST)
+	@OneToOne(optional = false, cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
 	private Funcionario funcionario;
 
 	public String getLogin() {
