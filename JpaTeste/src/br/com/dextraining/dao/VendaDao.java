@@ -47,7 +47,7 @@ public class VendaDao extends GenericDao<Venda> {
 	}
 
 	public List<Venda> buscarVendasDoFuncionario(Long funcionarioId) {
-		String jpql = "FROM " + getClazz().getSimpleName() + " v WHERE v.funcionario.id = :id";
+		String jpql = "FROM " + getClazz().getSimpleName() + " v JOIN FETCH v.itens i WHERE v.funcionario.id = :id";
 		TypedQuery<Venda> qry = getEm().createQuery(jpql, getClazz());
 		qry.setParameter("id", funcionarioId);
 		try {
