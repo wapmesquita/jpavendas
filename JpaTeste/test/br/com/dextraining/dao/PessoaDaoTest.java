@@ -64,6 +64,8 @@ public class PessoaDaoTest {
         GenericDao<Funcionario> dao = new GenericDao<Funcionario>(Funcionario.class, true);
         dao.salvar(p);
         System.out.println(p.getId());
+
+        System.out.println("Buscando");
         Funcionario pessoaEncontrada = dao.buscarPorId(p.getId());
 
         Assert.assertEquals(p, pessoaEncontrada);

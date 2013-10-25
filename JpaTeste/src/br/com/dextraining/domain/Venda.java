@@ -20,8 +20,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import flexjson.JSONSerializer;
 
 @Entity
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Venda extends AbstractEntity {
 
 	@ManyToOne(optional = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)

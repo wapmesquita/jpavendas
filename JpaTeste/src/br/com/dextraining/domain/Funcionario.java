@@ -1,12 +1,18 @@
 package br.com.dextraining.domain;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Funcionario extends PessoaFisica {
 
 	@OneToOne(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
