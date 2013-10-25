@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import br.com.dextraining.domain.ItemVenda;
 import br.com.dextraining.domain.Produto;
 import br.com.dextraining.domain.Venda;
+import br.com.dextraining.domain.query.VendaAcumuladaData;
 import br.com.dextraining.exception.QuantidadeDeProdutosIndisponiveis;
 
 public class VendaDao extends GenericDao<Venda> {
@@ -82,5 +83,18 @@ public class VendaDao extends GenericDao<Venda> {
 			e.printStackTrace();
 			return Collections.emptyList();
 		}
+	}
+
+	public List<VendaAcumuladaData> buscarVendaAcumuladas(Date inicio, Date fim) {
+		StringBuilder sb = new StringBuilder("SELECT new ").append(VendaAcumuladaData.class.getName()).append("(v.data, SUM(v.valor)) FROM ");
+		sb.append(Venda.class.getSimpleName());
+		sb.append(" v WHERE v.data BETWEEN :inicio AND :fim");
+		sb.append(" GROUP BY v.data ");
+		System.out.println(sb.toString());
+
+		TypedQuery<VendaAcumuladaData> qry = getEm().createQuery(sb.toString(), VendaAcumuladaData.class);
+		qry.setParameter("inicio", inicio);
+		qry.setParameter("fim", fim);
+		return qry.getResultList();
 	}
 }

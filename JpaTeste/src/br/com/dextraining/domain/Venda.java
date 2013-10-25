@@ -26,11 +26,14 @@ public class Venda extends AbstractEntity {
 	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
 	private List<ItemVenda> itens;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date data;
 
 	@Column(nullable = false, precision = 2, scale = 2)
 	private Double valor = 0.0;
+
+	@Temporal(TemporalType.TIME)
+	private Date horario;
 
 	public Venda(Cliente cliente, Funcionario funcionario) {
 		super();
@@ -76,6 +79,7 @@ public class Venda extends AbstractEntity {
 	}
 
 	public void setData(Date data) {
+		this.horario = data;
 		this.data = data;
 	}
 
@@ -84,5 +88,9 @@ public class Venda extends AbstractEntity {
 		JSONSerializer serializer = new JSONSerializer();
 		serializer.exclude("*.class");
 		return serializer.deepSerialize(this);
+	}
+
+	public Date getHorario() {
+		return horario;
 	}
 }
