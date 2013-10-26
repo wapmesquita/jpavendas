@@ -54,14 +54,16 @@ public class VendaDaoTest {
 
 		EntityManagerFactoryWrapper.renovar();
 
-		System.out.println("Simulando Lazy");
+		System.out.println("\n\n\n\nSimulando Lazy");
 		buscarPorId = dao.buscarPorId(1L);
 		Assert.assertNotNull(buscarPorId);
-
+		System.out.println(buscarPorId.toString());
+		System.out.println("Simulando Lazy\n\n\n\n");
+		
 		System.out.println("Buscar por Funcionario");
 		List<Venda> vendasFuncionario = dao.buscarVendasDoFuncionario(f.getId());
 		Assert.assertEquals(vendasFuncionario.get(0), buscarPorId);
-		//Assert.assertEquals(7, vendasFuncionario.get(0).getItens().size());
+		Assert.assertEquals(7, vendasFuncionario.get(0).getItens().size());
 
 		System.out.println("Buscar por Cliente");
 		List<Venda> vendasCliente = dao.buscarVendasParaCliente(c.getId());

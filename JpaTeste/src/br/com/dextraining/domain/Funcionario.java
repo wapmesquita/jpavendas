@@ -5,7 +5,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.QueryHint;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -13,9 +16,15 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@NamedQueries({
+	@NamedQuery(name = "Funcionario.buscarPorNome",
+				query = "SELECT f FROM Funcionario f WHERE f.nome like :nome",
+				hints = { 
+					@QueryHint(name = "org.hibernate.cacheable", 
+							value = "true") }) })
 public class Funcionario extends PessoaFisica {
 
-	@OneToOne(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
 	private Usuario usuario;
 
 	@Column

@@ -84,7 +84,8 @@ public class GenericDao<T extends AbstractEntity> {
 				clazz.getSimpleName()).append(" t");
 		if (filtro != null && !filtro.isEmpty()) {
 			sb.append(" WHERE ");
-			Iterator<Entry<String, Object>> iterator = filtro.entrySet().iterator();
+			Iterator<Entry<String, Object>> iterator = filtro.entrySet()
+					.iterator();
 			Entry<String, Object> entry;
 			while (iterator.hasNext()) {
 				entry = iterator.next();

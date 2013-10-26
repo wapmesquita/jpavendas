@@ -22,7 +22,8 @@ public class PessoaDaoTest {
 		f.getEndereco().setRua("Rua 1");
 		f.setNomeResponsavel("Mario");
 
-		GenericDao<Fornecedor> dao = new GenericDao<Fornecedor>(Fornecedor.class, true);
+		GenericDao<Fornecedor> dao = new GenericDao<Fornecedor>(
+				Fornecedor.class, true);
 		dao.salvar(f);
 		System.out.println(f.getId());
 		Fornecedor pessoaEncontrada = dao.buscarPorId(f.getId());
@@ -43,7 +44,8 @@ public class PessoaDaoTest {
 		f.getEndereco().setRua("Rua 1");
 		f.setNomeResponsavel("Maria");
 
-		GenericDao<Fornecedor> dao = new GenericDao<Fornecedor>(Fornecedor.class, true);
+		GenericDao<Fornecedor> dao = new GenericDao<Fornecedor>(
+				Fornecedor.class, true);
 		dao.salvar(f);
 
 		List<Fornecedor> pessoas = dao.buscarTodos();
@@ -54,22 +56,22 @@ public class PessoaDaoTest {
 
 	@Test
 	public void test03SalvarPessoaFisica() {
-        Funcionario funcionario = new Funcionario();
-        funcionario.setNome("JOAO");
-        funcionario.getEndereco().setCidade("Campinas");
-        funcionario.getEndereco().setEstado(UF.SP);
-        funcionario.getEndereco().setRua("Rua 1");
-        funcionario.setCpf("111.111.111-11");
-        funcionario.setSalario(1559.80);
+		Funcionario funcionario = new Funcionario();
+		funcionario.setNome("JOAO");
+		funcionario.getEndereco().setCidade("Campinas");
+		funcionario.getEndereco().setEstado(UF.SP);
+		funcionario.getEndereco().setRua("Rua 1");
+		funcionario.setCpf("111.111.111-11");
+		funcionario.setSalario(1559.80);
 
-        Usuario u = new Usuario();
+		Usuario u = new Usuario();
 		u.setLogin("usuario");
 		u.setSenha("senha");
 		u.setFuncionario(funcionario);
 
 		UsuarioDao userDao = new UsuarioDao(true);
 		userDao.salvar(u);
-		
+
 		Funcionario p = new Funcionario();
 		p.setNome("Jose");
 		p.getEndereco().setCidade("Campinas");
@@ -80,15 +82,62 @@ public class PessoaDaoTest {
 
 		FuncionarioDao dao = new FuncionarioDao(true);
 		dao.salvar(p);
-		System.out.println(p.getId());
+		Long id = p.getId();
+		System.out.println(id);
 
 		System.out.println("Buscando");
-		Funcionario pessoaEncontrada = dao.buscarPorId(p.getId());
 
+		Funcionario pessoaEncontrada = dao.buscarPorId(id);
+		System.out.println(pessoaEncontrada.getId());
 		Assert.assertEquals(p, pessoaEncontrada);
 
-		dao.remover(pessoaEncontrada);
-		Assert.assertEquals(null, dao.buscarPorId(p.getId()));
+		System.out.println("Todos");
+		Assert.assertNotNull(dao.buscarTodos());
 
+		dao.remover(dao.buscarPorId(id));
+		Assert.assertEquals(null, dao.buscarPorId(id));
+
+	}
+	
+	@Test
+	public void buscarPorNome() {
+		Funcionario funcionario = new Funcionario();
+		funcionario.setNome("JOAO");
+		funcionario.getEndereco().setCidade("Campinas");
+		funcionario.getEndereco().setEstado(UF.SP);
+		funcionario.getEndereco().setRua("Rua 1");
+		funcionario.setCpf("111.111.111-11");
+		funcionario.setSalario(1559.80);
+
+		Usuario u = new Usuario();
+		u.setLogin("usuario");
+		u.setSenha("senha");
+		u.setFuncionario(funcionario);
+
+		UsuarioDao userDao = new UsuarioDao(true);
+		userDao.salvar(u);
+
+		
+		
+		
+		
+		Funcionario p = new Funcionario();
+		p.setNome("Walter");
+		p.getEndereco().setCidade("Campinas");
+		p.getEndereco().setEstado(UF.SP);
+		p.getEndereco().setRua("Rua 1");
+		p.setCpf("999.999.999-99");
+		p.setSalario(1559.80);
+
+		FuncionarioDao dao = new FuncionarioDao(true);
+		dao.salvar(p);
+		Long id = p.getId();
+		System.out.println(id);
+
+		System.out.println("Buscando");
+		Assert.assertEquals(p, dao.buscaPorNome("Walter").get(0));
+		System.out.println("Segunda vez");
+		Assert.assertEquals(p, dao.buscaPorNome("Walter").get(0));
+		
 	}
 }

@@ -22,7 +22,7 @@ public class Usuario extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataUltimoAcesso;
 
-	@OneToOne(optional = false, cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
+	@OneToOne(optional = false, fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
 	private Funcionario funcionario;
 
 	public String getLogin() {

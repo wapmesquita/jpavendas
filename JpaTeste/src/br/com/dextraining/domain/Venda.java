@@ -18,13 +18,13 @@ import flexjson.JSONSerializer;
 @Entity
 public class Venda extends AbstractEntity {
 
-	@ManyToOne(optional = true, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToOne(optional = true, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Cliente cliente;
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private Funcionario funcionario;
 
-	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "venda", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<ItemVenda> itens;
 
 	@Temporal(TemporalType.DATE)

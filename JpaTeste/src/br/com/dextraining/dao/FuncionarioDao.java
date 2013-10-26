@@ -1,5 +1,7 @@
 package br.com.dextraining.dao;
 
+import java.util.List;
+
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
@@ -36,5 +38,12 @@ public class FuncionarioDao extends PessoaDao<Funcionario> {
 			return null;
 		}
 
+	}
+	
+	@Override
+	public List<Funcionario> buscaPorNome(String nome) {
+		TypedQuery<Funcionario> qry = getEm().createNamedQuery("Funcionario.buscarPorNome", Funcionario.class);
+		qry.setParameter("nome", nome + "%");
+		return qry.getResultList();
 	}
 }

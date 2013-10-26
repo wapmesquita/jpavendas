@@ -34,7 +34,8 @@ public class VendaDao extends GenericDao<Venda> {
 
 		for (ItemVenda item : venda.getItens()) {
 			try {
-				produtoDao.atualizaQuantidade(item.getProduto(), item.getQntd());
+				produtoDao
+						.atualizaQuantidade(item.getProduto(), item.getQntd());
 			} catch (QuantidadeDeProdutosIndisponiveis e) {
 				throw new RuntimeException(e);
 			}
@@ -47,7 +48,8 @@ public class VendaDao extends GenericDao<Venda> {
 	}
 
 	public List<Venda> buscarVendasDoFuncionario(Long funcionarioId) {
-		String jpql = "FROM " + getClazz().getSimpleName() + " v JOIN FETCH v.itens i WHERE v.funcionario.id = :id";
+		String jpql = "FROM " + getClazz().getSimpleName()
+				+ " v JOIN FETCH v.itens i WHERE v.funcionario.id = :id";
 		TypedQuery<Venda> qry = getEm().createQuery(jpql, getClazz());
 		qry.setParameter("id", funcionarioId);
 		try {
@@ -59,7 +61,8 @@ public class VendaDao extends GenericDao<Venda> {
 	}
 
 	public List<Venda> buscarVendasParaCliente(Long clienteId) {
-		String jpql = "FROM " + getClazz().getSimpleName() + " v WHERE v.cliente.id = :id";
+		String jpql = "FROM " + getClazz().getSimpleName()
+				+ " v WHERE v.cliente.id = :id";
 		TypedQuery<Venda> qry = getEm().createQuery(jpql, getClazz());
 		qry.setParameter("id", clienteId);
 		try {
@@ -72,10 +75,12 @@ public class VendaDao extends GenericDao<Venda> {
 
 	public List<Venda> buscarVendasDoProduto(Produto produto) {
 		StringBuilder jpql = new StringBuilder("SELECT venda FROM ");
-		jpql.append(getClazz().getSimpleName()).append(" venda INNER JOIN venda.itens item ");
+		jpql.append(getClazz().getSimpleName()).append(
+				" venda INNER JOIN venda.itens item ");
 		jpql.append(" WHERE item.produto = :produto");
 
-		TypedQuery<Venda> qry = getEm().createQuery(jpql.toString(), getClazz());
+		TypedQuery<Venda> qry = getEm()
+				.createQuery(jpql.toString(), getClazz());
 		qry.setParameter("produto", produto);
 		try {
 			return qry.getResultList();
@@ -86,13 +91,17 @@ public class VendaDao extends GenericDao<Venda> {
 	}
 
 	public List<VendaAcumuladaData> buscarVendaAcumuladas(Date inicio, Date fim) {
-		StringBuilder sb = new StringBuilder("SELECT new ").append(VendaAcumuladaData.class.getName()).append("(v.data, SUM(v.valor)) FROM ");
+		StringBuilder sb = new StringBuilder("SELECT new ");
+		sb.append(VendaAcumuladaData.class.getName());
+		sb.append("(v.data, SUM(v.valor)) FROM ");
 		sb.append(Venda.class.getSimpleName());
 		sb.append(" v WHERE v.data BETWEEN :inicio AND :fim");
 		sb.append(" GROUP BY v.data ");
+		sb.append(" HAVING SUM(v.valor) > 10.0");
 		System.out.println(sb.toString());
 
-		TypedQuery<VendaAcumuladaData> qry = getEm().createQuery(sb.toString(), VendaAcumuladaData.class);
+		TypedQuery<VendaAcumuladaData> qry = getEm().createQuery(sb.toString(),
+				VendaAcumuladaData.class);
 		qry.setParameter("inicio", inicio);
 		qry.setParameter("fim", fim);
 		return qry.getResultList();

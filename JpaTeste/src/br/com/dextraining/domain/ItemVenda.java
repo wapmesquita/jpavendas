@@ -2,12 +2,13 @@ package br.com.dextraining.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class ItemVenda extends AbstractEntity {
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, fetch=FetchType.LAZY)
 	private Produto produto;
 
 	@Column(nullable = false)
