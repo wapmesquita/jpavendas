@@ -4,6 +4,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.com.dextraining.domain.Funcionario;
+import br.com.dextraining.domain.auditoria.AcaoAuditoria;
+import br.com.dextraining.service.AuditoriaService;
 
 public class FuncionarioDao extends PessoaDao<Funcionario> {
 
@@ -15,9 +17,16 @@ public class FuncionarioDao extends PessoaDao<Funcionario> {
 		super(Funcionario.class);
 	}
 
+	@Override
+	public void salvar(Funcionario value) {
+		super.salvar(value);
+		init();
+		AuditoriaService.auditar(value.getId(), value, AcaoAuditoria.CADASTRO_FUNCIONARIO);
+		commit();
+	}
+
 	public Funcionario buscarPorUsuario(String login) {
-		String jpql = "FROM " + getClazz().getSimpleName()
-				+ " f WHERE f.usuario.login = :login";
+		String jpql = "FROM " + getClazz().getSimpleName() + " f WHERE f.usuario.login = :login";
 		TypedQuery<Funcionario> qry = getEm().createQuery(jpql, getClazz());
 		qry.setParameter("login", login);
 		try {
