@@ -20,6 +20,7 @@ public class EntityManagerFactoryWrapper {
 	private static EntityManagerFactory getFactory() {
 		if (emf == null) {
 			emf = Persistence.createEntityManagerFactory("teste");
+			// DataBaseManager.runManager("jdbc:hsqldb:mem:.");
 		}
 		return emf;
 	}
