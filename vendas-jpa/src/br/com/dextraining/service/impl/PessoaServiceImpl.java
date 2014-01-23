@@ -1,4 +1,4 @@
-package br.com.dextraining.dao;
+package br.com.dextraining.service.impl;
 
 import java.util.Collections;
 import java.util.List;
@@ -8,19 +8,14 @@ import javax.persistence.TypedQuery;
 
 import br.com.dextraining.domain.Pessoa;
 
-public abstract class PessoaDao<T extends Pessoa> extends GenericDao<T> {
+public abstract class PessoaServiceImpl<T extends Pessoa> extends AbstractServiceImpl<T> {
 
-	public PessoaDao(Class<T> clazz, boolean gerenciaTransacao) {
-		super(clazz, gerenciaTransacao);
-	}
-
-	public PessoaDao(Class<T> clazz) {
+	public PessoaServiceImpl(Class<T> clazz) {
 		super(clazz);
 	}
 
 	public List<T> buscaPorNome(String nome) {
-		String jpql = "FROM " + getClazz().getSimpleName()
-				+ " t WHERE t.nome LIKE :nome";
+		String jpql = "FROM " + getClazz().getSimpleName() + " t WHERE t.nome LIKE :nome";
 		TypedQuery<T> qry = getEm().createQuery(jpql, getClazz());
 		qry.setParameter("nome", nome + "%");
 		try {

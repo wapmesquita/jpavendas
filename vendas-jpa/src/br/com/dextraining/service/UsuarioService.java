@@ -1,13 +1,19 @@
 package br.com.dextraining.service;
 
-import br.com.dextraining.dao.UsuarioDao;
+import br.com.dextraining.domain.Funcionario;
 import br.com.dextraining.domain.Usuario;
+import br.com.dextraining.exception.AuthenticateException;
 
-public class UsuarioService {
+public interface UsuarioService {
 
-	public static Usuario getUsuarioLogado() {
-		UsuarioDao dao = new UsuarioDao();
-		return dao.buscarPorId(1L);
-	}
+	public abstract Usuario autenticarUsuario(String login, String senha) throws AuthenticateException;
+
+	public abstract Usuario atualizarDataLogin(Usuario user);
+
+	public abstract Funcionario buscarFuncionarioPorUsuario(String login);
+
+	public abstract void salvar(Usuario u);
+
+	public abstract Usuario buscarPorId(Long id);
 
 }

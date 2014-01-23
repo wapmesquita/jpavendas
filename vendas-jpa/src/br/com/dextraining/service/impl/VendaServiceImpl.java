@@ -1,4 +1,4 @@
-package br.com.dextraining.dao;
+package br.com.dextraining.service.impl;
 
 import java.util.Collections;
 import java.util.Date;
@@ -12,14 +12,13 @@ import br.com.dextraining.domain.Produto;
 import br.com.dextraining.domain.Venda;
 import br.com.dextraining.domain.query.VendaAcumuladaData;
 import br.com.dextraining.exception.QuantidadeDeProdutosIndisponiveis;
+import br.com.dextraining.service.ProdutoService;
+import br.com.dextraining.service.ServiceFactory;
+import br.com.dextraining.service.VendaService;
 
-public class VendaDao extends GenericDao<Venda> {
+public class VendaServiceImpl extends AbstractServiceImpl<Venda> implements VendaService {
 
-	public VendaDao(boolean gerenciaTransacao) {
-		super(Venda.class, gerenciaTransacao);
-	}
-
-	public VendaDao() {
+	public VendaServiceImpl() {
 		super(Venda.class);
 	}
 
@@ -29,13 +28,11 @@ public class VendaDao extends GenericDao<Venda> {
 			throw new RuntimeException("Venda não pode ser alterada");
 		}
 
-		init();
-		ProdutoDao produtoDao = new ProdutoDao(false);
+		ProdutoService produtoService = ServiceFactory.service(ProdutoService.class);
 
 		for (ItemVenda item : venda.getItens()) {
 			try {
-				produtoDao
-						.atualizaQuantidade(item.getProduto(), item.getQntd());
+				produtoService.atualizaQuantidade(item.getProduto(), item.getQntd());
 			} catch (QuantidadeDeProdutosIndisponiveis e) {
 				throw new RuntimeException(e);
 			}
@@ -44,12 +41,10 @@ public class VendaDao extends GenericDao<Venda> {
 		venda.setData(new Date());
 		getEm().persist(venda);
 
-		commit();
 	}
 
 	public List<Venda> buscarVendasDoFuncionario(Long funcionarioId) {
-		String jpql = "FROM " + getClazz().getSimpleName()
-				+ " v JOIN FETCH v.itens i WHERE v.funcionario.id = :id";
+		String jpql = "FROM " + getClazz().getSimpleName() + " v JOIN FETCH v.itens i WHERE v.funcionario.id = :id";
 		TypedQuery<Venda> qry = getEm().createQuery(jpql, getClazz());
 		qry.setParameter("id", funcionarioId);
 		try {
@@ -61,8 +56,7 @@ public class VendaDao extends GenericDao<Venda> {
 	}
 
 	public List<Venda> buscarVendasParaCliente(Long clienteId) {
-		String jpql = "FROM " + getClazz().getSimpleName()
-				+ " v WHERE v.cliente.id = :id";
+		String jpql = "FROM " + getClazz().getSimpleName() + " v WHERE v.cliente.id = :id";
 		TypedQuery<Venda> qry = getEm().createQuery(jpql, getClazz());
 		qry.setParameter("id", clienteId);
 		try {
@@ -75,12 +69,10 @@ public class VendaDao extends GenericDao<Venda> {
 
 	public List<Venda> buscarVendasDoProduto(Produto produto) {
 		StringBuilder jpql = new StringBuilder("SELECT venda FROM ");
-		jpql.append(getClazz().getSimpleName()).append(
-				" venda INNER JOIN venda.itens item ");
+		jpql.append(getClazz().getSimpleName()).append(" venda INNER JOIN venda.itens item ");
 		jpql.append(" WHERE item.produto = :produto");
 
-		TypedQuery<Venda> qry = getEm()
-				.createQuery(jpql.toString(), getClazz());
+		TypedQuery<Venda> qry = getEm().createQuery(jpql.toString(), getClazz());
 		qry.setParameter("produto", produto);
 		try {
 			return qry.getResultList();
@@ -100,8 +92,7 @@ public class VendaDao extends GenericDao<Venda> {
 		sb.append(" HAVING SUM(v.valor) > 10.0");
 		System.out.println(sb.toString());
 
-		TypedQuery<VendaAcumuladaData> qry = getEm().createQuery(sb.toString(),
-				VendaAcumuladaData.class);
+		TypedQuery<VendaAcumuladaData> qry = getEm().createQuery(sb.toString(), VendaAcumuladaData.class);
 		qry.setParameter("inicio", inicio);
 		qry.setParameter("fim", fim);
 		return qry.getResultList();

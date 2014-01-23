@@ -1,4 +1,4 @@
-package br.com.dextraining.service;
+package br.com.dextraining.service.impl;
 
 import java.util.Date;
 
@@ -7,15 +7,15 @@ import br.com.dextraining.domain.auditoria.AcaoAuditoria;
 import br.com.dextraining.domain.auditoria.Auditoria;
 import flexjson.JSONSerializer;
 
-public class AuditoriaService {
-	
+public class AuditoriaServiceImpl {
+
 	public static void auditar(Long idObj, AcaoAuditoria acao) {
 		auditar(idObj, null, acao);
 	}
-	
+
 	public static void auditar(Long idObj, Object obj, AcaoAuditoria acao) {
 		JSONSerializer serializer = getSerializer();
-		Auditoria auditoria = new Auditoria(UsuarioService.getUsuarioLogado().getId(), idObj, acao);
+		Auditoria auditoria = new Auditoria(UsuarioServiceImpl.getUsuarioLogado().getId(), idObj, acao);
 		if (obj != null) {
 			auditoria.setObjectData(serializer.deepSerialize(obj));
 		}

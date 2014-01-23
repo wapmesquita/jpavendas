@@ -25,6 +25,11 @@ public class EntityManagerFactoryWrapper {
 		return emf;
 	}
 
+	public static void restart() {
+		commit();
+		init();
+	}
+
 	public static void init() {
 		EntityTransaction tx = getEntityManager().getTransaction();
 		if (tx == null || !tx.isActive()) {

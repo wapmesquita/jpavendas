@@ -9,6 +9,10 @@ import br.com.dextraining.domain.Funcionario;
 import br.com.dextraining.domain.UF;
 import br.com.dextraining.domain.Usuario;
 import br.com.dextraining.domain.compras.Fornecedor;
+import br.com.dextraining.service.FornecedorService;
+import br.com.dextraining.service.FuncionarioService;
+import br.com.dextraining.service.ServiceFactory;
+import br.com.dextraining.service.UsuarioService;
 
 public class PessoaDaoTest {
 
@@ -22,16 +26,15 @@ public class PessoaDaoTest {
 		f.getEndereco().setRua("Rua 1");
 		f.setNomeResponsavel("Mario");
 
-		GenericDao<Fornecedor> dao = new GenericDao<Fornecedor>(
-				Fornecedor.class, true);
-		dao.salvar(f);
+		FornecedorService fornecedorService = ServiceFactory.service(FornecedorService.class);
+		fornecedorService.salvar(f);
 		System.out.println(f.getId());
-		Fornecedor pessoaEncontrada = dao.buscarPorId(f.getId());
+		Fornecedor pessoaEncontrada = fornecedorService.buscarPorId(f.getId());
 
 		Assert.assertEquals(f, pessoaEncontrada);
 
-		dao.remover(pessoaEncontrada);
-		Assert.assertEquals(null, dao.buscarPorId(f.getId()));
+		fornecedorService.remover(pessoaEncontrada);
+		Assert.assertEquals(null, fornecedorService.buscarPorId(f.getId()));
 	}
 
 	@Test
@@ -44,11 +47,10 @@ public class PessoaDaoTest {
 		f.getEndereco().setRua("Rua 1");
 		f.setNomeResponsavel("Maria");
 
-		GenericDao<Fornecedor> dao = new GenericDao<Fornecedor>(
-				Fornecedor.class, true);
-		dao.salvar(f);
+		FornecedorService fornecedorService = ServiceFactory.service(FornecedorService.class);
+		fornecedorService.salvar(f);
 
-		List<Fornecedor> pessoas = dao.buscarTodos();
+		List<Fornecedor> pessoas = fornecedorService.buscarTodos();
 		Assert.assertTrue(pessoas.size() > 0);
 		System.out.println("Pessoas");
 		System.out.println(pessoas.size());
@@ -69,9 +71,10 @@ public class PessoaDaoTest {
 		u.setSenha("senha");
 		u.setFuncionario(funcionario);
 
-		UsuarioDao userDao = new UsuarioDao(true);
-		userDao.salvar(u);
+		UsuarioService userService = ServiceFactory.service(UsuarioService.class);
+		userService.salvar(u);
 
+		EntityManagerFactoryWrapper.restart();
 		Funcionario p = new Funcionario();
 		p.setNome("Jose");
 		p.getEndereco().setCidade("Campinas");
@@ -80,25 +83,27 @@ public class PessoaDaoTest {
 		p.setCpf("222.222.222-22");
 		p.setSalario(1559.80);
 
-		FuncionarioDao dao = new FuncionarioDao(true);
-		dao.salvar(p);
+		FuncionarioService funcService = ServiceFactory.service(FuncionarioService.class);
+		funcService.salvar(p);
+		EntityManagerFactoryWrapper.restart();
 		Long id = p.getId();
 		System.out.println(id);
 
 		System.out.println("Buscando");
 
-		Funcionario pessoaEncontrada = dao.buscarPorId(id);
+		Funcionario pessoaEncontrada = funcService.buscarPorId(id);
 		System.out.println(pessoaEncontrada.getId());
 		Assert.assertEquals(p, pessoaEncontrada);
 
 		System.out.println("Todos");
-		Assert.assertNotNull(dao.buscarTodos());
+		Assert.assertNotNull(funcService.buscarTodos());
 
-		dao.remover(dao.buscarPorId(id));
-		Assert.assertEquals(null, dao.buscarPorId(id));
+		funcService.remover(funcService.buscarPorId(id));
+		EntityManagerFactoryWrapper.restart();
+		Assert.assertEquals(null, funcService.buscarPorId(id));
 
 	}
-	
+
 	@Test
 	public void buscarPorNome() {
 		Funcionario funcionario = new Funcionario();
@@ -114,13 +119,9 @@ public class PessoaDaoTest {
 		u.setSenha("senha");
 		u.setFuncionario(funcionario);
 
-		UsuarioDao userDao = new UsuarioDao(true);
-		userDao.salvar(u);
+		UsuarioService userService = ServiceFactory.service(UsuarioService.class);
+		userService.salvar(u);
 
-		
-		
-		
-		
 		Funcionario p = new Funcionario();
 		p.setNome("Walter");
 		p.getEndereco().setCidade("Campinas");
@@ -129,15 +130,15 @@ public class PessoaDaoTest {
 		p.setCpf("999.999.999-99");
 		p.setSalario(1559.80);
 
-		FuncionarioDao dao = new FuncionarioDao(true);
-		dao.salvar(p);
+		FuncionarioService funcService = ServiceFactory.service(FuncionarioService.class);
+		funcService.salvar(p);
 		Long id = p.getId();
 		System.out.println(id);
 
 		System.out.println("Buscando");
-		Assert.assertEquals(p, dao.buscaPorNome("Walter").get(0));
+		Assert.assertEquals(p, funcService.buscaPorNome("Walter").get(0));
 		System.out.println("Segunda vez");
-		Assert.assertEquals(p, dao.buscaPorNome("Walter").get(0));
-		
+		Assert.assertEquals(p, funcService.buscaPorNome("Walter").get(0));
+
 	}
 }

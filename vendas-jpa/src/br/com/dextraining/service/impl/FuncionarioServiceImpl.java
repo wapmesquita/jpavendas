@@ -1,4 +1,4 @@
-package br.com.dextraining.dao;
+package br.com.dextraining.service.impl;
 
 import java.util.List;
 
@@ -7,27 +7,22 @@ import javax.persistence.TypedQuery;
 
 import br.com.dextraining.domain.Funcionario;
 import br.com.dextraining.domain.auditoria.AcaoAuditoria;
-import br.com.dextraining.service.AuditoriaService;
+import br.com.dextraining.service.FuncionarioService;
 
-public class FuncionarioDao extends PessoaDao<Funcionario> {
+public class FuncionarioServiceImpl extends PessoaServiceImpl<Funcionario> implements FuncionarioService {
 
-	public FuncionarioDao(boolean gerenciaTransacao) {
-		super(Funcionario.class, gerenciaTransacao);
-	}
-
-	public FuncionarioDao(Class<Funcionario> clazz) {
+	public FuncionarioServiceImpl() {
 		super(Funcionario.class);
 	}
 
-	@Override
+    @Override
 	public void salvar(Funcionario value) {
 		super.salvar(value);
-		init();
-		AuditoriaService.auditar(value.getId(), value, AcaoAuditoria.CADASTRO_FUNCIONARIO);
-		commit();
+		AuditoriaServiceImpl.auditar(value.getId(), value, AcaoAuditoria.CADASTRO_FUNCIONARIO);
 	}
 
-	public Funcionario buscarPorUsuario(String login) {
+	@Override
+    public Funcionario buscarPorUsuario(String login) {
 		String jpql = "FROM " + getClazz().getSimpleName() + " f WHERE f.usuario.login = :login";
 		TypedQuery<Funcionario> qry = getEm().createQuery(jpql, getClazz());
 		qry.setParameter("login", login);
@@ -40,7 +35,7 @@ public class FuncionarioDao extends PessoaDao<Funcionario> {
 
 	}
 	
-	@Override
+    @Override
 	public List<Funcionario> buscaPorNome(String nome) {
 		TypedQuery<Funcionario> qry = getEm().createNamedQuery("Funcionario.buscarPorNome", Funcionario.class);
 		qry.setParameter("nome", nome + "%");

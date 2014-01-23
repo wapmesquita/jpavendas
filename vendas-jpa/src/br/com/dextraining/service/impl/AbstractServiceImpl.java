@@ -1,4 +1,4 @@
-package br.com.dextraining.dao;
+package br.com.dextraining.service.impl;
 
 import java.util.Iterator;
 import java.util.List;
@@ -9,63 +9,35 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import br.com.dextraining.dao.EntityManagerFactoryWrapper;
 import br.com.dextraining.domain.AbstractEntity;
 
-public class GenericDao<T extends AbstractEntity> {
+public class AbstractServiceImpl<T extends AbstractEntity> {
 
-	private final boolean gerenciaTransacao;
 	private final Class<T> clazz;
 
-	public GenericDao(Class<T> clazz, boolean gerenciaTransacao) {
+	public AbstractServiceImpl(Class<T> clazz) {
 		this.clazz = clazz;
-		this.gerenciaTransacao = gerenciaTransacao;
-	}
-
-	public GenericDao(Class<T> clazz) {
-		this(clazz, false);
 	}
 
 	protected EntityManager getEm() {
 		return EntityManagerFactoryWrapper.getEntityManager();
 	}
 
-	protected boolean isGerenciaTransacao() {
-		return gerenciaTransacao;
-	}
-
 	protected Class<T> getClazz() {
 		return clazz;
 	}
 
-	protected void init() {
-		if (this.gerenciaTransacao)
-			EntityManagerFactoryWrapper.init();
-	}
-
-	protected void commit() {
-		if (this.gerenciaTransacao)
-			EntityManagerFactoryWrapper.commit();
-	}
-
-	protected void rollback() {
-		if (this.gerenciaTransacao)
-			EntityManagerFactoryWrapper.rollback();
-	}
-
 	public void salvar(T value) {
-		this.init();
 		if (value.getId() == null) {
 			getEm().persist(value);
 		} else {
 			getEm().merge(value);
 		}
-		this.commit();
 	}
 
 	public void remover(T value) {
-		this.init();
 		getEm().remove(value);
-		this.commit();
 	}
 
 	public T buscarPorId(Long id) {
