@@ -10,10 +10,8 @@ import br.com.dextraining.domain.Categoria;
 import br.com.dextraining.domain.Produto;
 import br.com.dextraining.service.ProdutoService;
 import br.com.dextraining.service.ServiceFactory;
-import br.com.dextraining.service.impl.AbstractServiceImpl;
-import br.com.dextraining.service.impl.ProdutoServiceImpl;
 
-public class ProdutoDaoTest {
+public class ProdutoDaoTest extends AbstractTest {
 
 	@Test
 	public void testBuscarPorValor() {

@@ -23,7 +23,7 @@ import br.com.dextraining.service.ServiceFactory;
 import br.com.dextraining.service.VendaService;
 import br.com.dextraining.service.impl.ProdutoServiceImpl;
 
-public class VendaDaoTest {
+public class VendaDaoTest extends AbstractTest {
 
 	@Test
 	public void testNovaVenda() {

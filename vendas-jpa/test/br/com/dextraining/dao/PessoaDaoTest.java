@@ -14,7 +14,7 @@ import br.com.dextraining.service.FuncionarioService;
 import br.com.dextraining.service.ServiceFactory;
 import br.com.dextraining.service.UsuarioService;
 
-public class PessoaDaoTest {
+public class PessoaDaoTest extends AbstractTest {
 
 	@Test
 	public void test01Salvar() {
@@ -74,7 +74,6 @@ public class PessoaDaoTest {
 		UsuarioService userService = ServiceFactory.service(UsuarioService.class);
 		userService.salvar(u);
 
-		EntityManagerFactoryWrapper.restart();
 		Funcionario p = new Funcionario();
 		p.setNome("Jose");
 		p.getEndereco().setCidade("Campinas");
@@ -85,7 +84,6 @@ public class PessoaDaoTest {
 
 		FuncionarioService funcService = ServiceFactory.service(FuncionarioService.class);
 		funcService.salvar(p);
-		EntityManagerFactoryWrapper.restart();
 		Long id = p.getId();
 		System.out.println(id);
 
@@ -99,7 +97,6 @@ public class PessoaDaoTest {
 		Assert.assertNotNull(funcService.buscarTodos());
 
 		funcService.remover(funcService.buscarPorId(id));
-		EntityManagerFactoryWrapper.restart();
 		Assert.assertEquals(null, funcService.buscarPorId(id));
 
 	}

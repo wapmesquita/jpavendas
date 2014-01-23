@@ -11,7 +11,7 @@ import br.com.dextraining.service.FuncionarioService;
 import br.com.dextraining.service.ServiceFactory;
 import br.com.dextraining.service.UsuarioService;
 
-public class UsuarioDaoTest {
+public class UsuarioDaoTest extends AbstractTest {
 
 	@Test
 	public void testAutenticacao() throws AuthenticateException {
