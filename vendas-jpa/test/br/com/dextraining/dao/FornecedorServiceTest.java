@@ -34,6 +34,10 @@ public class FornecedorServiceTest extends AbstractTest {
 		List<Fornecedor> buscarPorFiltro = getService(FornecedorService.class).buscarPorFiltro(filtros);
 		Assert.assertEquals(1, buscarPorFiltro.size());
 
+		getService(FornecedorService.class).remover(f);
+
+		list = getService(FornecedorService.class).buscarTodos();
+		Assert.assertTrue(list.size() == 1);
 	}
 
 }
