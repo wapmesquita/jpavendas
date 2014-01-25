@@ -3,10 +3,12 @@ package br.com.dextraining.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Before;
 
 import br.com.dextraining.domain.Endereco;
 import br.com.dextraining.domain.Funcionario;
+import br.com.dextraining.domain.Produto;
 import br.com.dextraining.domain.UF;
 import br.com.dextraining.domain.Usuario;
 import br.com.dextraining.domain.compras.Fornecedor;
@@ -22,8 +24,19 @@ public abstract class AbstractTest {
 		EntityManagerFactoryWrapper.start();
 	}
 
+	@After
 	public void after() {
 		EntityManagerFactoryWrapper.shutdown();
+	}
+
+	protected <T> T getService(Class<T> clazz) {
+		@SuppressWarnings("unchecked")
+		T value = (T) services.get(clazz);
+		if (value == null) {
+			value = ServiceFactory.service(clazz);
+			services.put(clazz, value);
+		}
+		return value;
 	}
 
 	protected Funcionario getFuncionario(String cpf, String nome, Double salario, Endereco endereco) {
@@ -59,13 +72,12 @@ public abstract class AbstractTest {
 		return f;
 	}
 
-	protected <T> T getService(Class<T> clazz) {
-		@SuppressWarnings("unchecked")
-		T value = (T) services.get(clazz);
-		if (value == null) {
-			value = ServiceFactory.service(clazz);
-			services.put(clazz, value);
-		}
-		return value;
+	protected Produto getProduto(String descricao, String nome, int qntd, double valor) {
+		Produto p1 = new Produto();
+		p1.setDescricao(descricao);
+		p1.setNome(nome);
+		p1.setQntd(qntd);
+		p1.setValor(valor);
+		return p1;
 	}
 }

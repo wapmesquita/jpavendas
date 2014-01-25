@@ -13,7 +13,7 @@ import br.com.dextraining.domain.AbstractEntity;
 import br.com.dextraining.jpa.EntityManagerFactoryWrapper;
 import br.com.dextraining.service.AbstractService;
 
-public class AbstractServiceImpl<T extends AbstractEntity> implements AbstractService<T> {
+public abstract class AbstractServiceImpl<T extends AbstractEntity> implements AbstractService<T> {
 
 	private final Class<T> clazz;
 
