@@ -13,7 +13,6 @@ public interface UsuarioService {
 
 	public abstract Funcionario buscarFuncionarioPorUsuario(String login);
 
-	@Deprecated
 	@Transaction
 	public abstract void salvar(Usuario u);
 

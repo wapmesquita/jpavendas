@@ -1,13 +1,71 @@
 package br.com.dextraining.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Before;
 
+import br.com.dextraining.domain.Endereco;
+import br.com.dextraining.domain.Funcionario;
+import br.com.dextraining.domain.UF;
+import br.com.dextraining.domain.Usuario;
+import br.com.dextraining.domain.compras.Fornecedor;
+import br.com.dextraining.jpa.EntityManagerFactoryWrapper;
+import br.com.dextraining.service.ServiceFactory;
+
 public abstract class AbstractTest {
-	
+
+	private Map<Class<?>, Object> services = new HashMap<Class<?>, Object>();
+
 	@Before
 	public void before() {
+		EntityManagerFactoryWrapper.start();
 	}
 
 	public void after() {
+		EntityManagerFactoryWrapper.shutdown();
+	}
+
+	protected Funcionario getFuncionario(String cpf, String nome, Double salario, Endereco endereco) {
+		Funcionario f = new Funcionario();
+		f.setCpf(cpf);
+		f.setNome(nome);
+		f.setSalario(salario);
+		f.setEndereco(endereco);
+		return f;
+	}
+
+	protected Usuario getUsuario(String login, String senha) {
+		Usuario u = new Usuario();
+		u.setLogin(login);
+		u.setSenha(senha);
+		return u;
+	}
+
+	protected Endereco getEndereco(String cidade, UF uf, String rua) {
+		Endereco e = new Endereco();
+		e.setCidade(cidade);
+		e.setEstado(uf);
+		e.setRua(rua);
+		return e;
+	}
+
+	protected Fornecedor getFornecedor(String nome, String cnpj, String nomeResponsavel, Endereco endereco) {
+		Fornecedor f = new Fornecedor();
+		f.setNome(nome);
+		f.setCnpj(cnpj);
+		f.setEndereco(endereco);
+		f.setNomeResponsavel(nomeResponsavel);
+		return f;
+	}
+
+	protected <T> T getService(Class<T> clazz) {
+		@SuppressWarnings("unchecked")
+		T value = (T) services.get(clazz);
+		if (value == null) {
+			value = ServiceFactory.service(clazz);
+			services.put(clazz, value);
+		}
+		return value;
 	}
 }

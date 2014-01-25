@@ -58,4 +58,16 @@ public class EntityManagerFactoryWrapper {
 		em = null;
 	}
 
+	public static void start() {
+		if (getFactory() == null) {
+			throw new RuntimeException("No entity manager factory");
+		}
+	}
+
+	public static void shutdown() {
+		renovar();
+		emf.close();
+		emf = null;
+	}
+
 }

@@ -37,6 +37,7 @@ public class ServiceHook implements InvocationHandler {
 		if (transaction) {
 			System.out.println("===> Commiting transaction");
 			EntityManagerFactoryWrapper.commit();
+			System.out.println("===> Transaction Commited");
 		}
 	}
 
