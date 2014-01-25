@@ -1,4 +1,4 @@
-package br.com.dextraining.dao;
+package br.com.dextraining.service;
 
 import org.junit.Assert;
 import org.junit.Test;

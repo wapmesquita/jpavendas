@@ -50,6 +50,6 @@ public class UsuarioServiceImpl extends AbstractServiceImpl<Usuario> implements 
 
 	public static Usuario getUsuarioLogado() {
 		UsuarioService service = ServiceFactory.service(UsuarioService.class);
-		return service.buscarPorId(1L);
+		return service.buscarTodos().get(0);
 	}
 }

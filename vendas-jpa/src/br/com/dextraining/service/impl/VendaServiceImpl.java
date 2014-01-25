@@ -23,9 +23,9 @@ public class VendaServiceImpl extends AbstractServiceImpl<Venda> implements Vend
 	}
 
 	@Override
-	public void salvar(Venda venda) {
+	public Venda salvar(Venda venda) {
 		if (venda.getId() != null) {
-			throw new RuntimeException("Venda não pode ser alterada");
+			throw new RuntimeException("Venda nao pode ser alterada");
 		}
 
 		ProdutoService produtoService = ServiceFactory.service(ProdutoService.class);
@@ -40,7 +40,7 @@ public class VendaServiceImpl extends AbstractServiceImpl<Venda> implements Vend
 
 		venda.setData(new Date());
 		getEm().persist(venda);
-
+		return venda;
 	}
 
 	public List<Venda> buscarVendasDoFuncionario(Long funcionarioId) {

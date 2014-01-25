@@ -14,6 +14,6 @@ public interface ClienteService {
 
 	@Loggable("Salvar cliente")
 	@Transaction
-	public abstract void salvar(Cliente c);
+	public Cliente salvar(Cliente c);
 
 }

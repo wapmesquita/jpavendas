@@ -16,9 +16,10 @@ public class FuncionarioServiceImpl extends PessoaServiceImpl<Funcionario> imple
 	}
 
     @Override
-	public void salvar(Funcionario value) {
-		super.salvar(value);
-		AuditoriaServiceImpl.auditar(value.getId(), value, AcaoAuditoria.CADASTRO_FUNCIONARIO);
+	public Funcionario salvar(Funcionario value) {
+		Funcionario f = super.salvar(value);
+		AuditoriaServiceImpl.auditar(f.getId(), value, AcaoAuditoria.CADASTRO_FUNCIONARIO);
+		return f;
 	}
 
 	@Override

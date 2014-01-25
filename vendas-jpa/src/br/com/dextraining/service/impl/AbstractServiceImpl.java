@@ -11,9 +11,8 @@ import javax.persistence.TypedQuery;
 
 import br.com.dextraining.domain.AbstractEntity;
 import br.com.dextraining.jpa.EntityManagerFactoryWrapper;
-import br.com.dextraining.service.AbstractService;
 
-public abstract class AbstractServiceImpl<T extends AbstractEntity> implements AbstractService<T> {
+public abstract class AbstractServiceImpl<T extends AbstractEntity> {
 
 	private final Class<T> clazz;
 
@@ -29,26 +28,23 @@ public abstract class AbstractServiceImpl<T extends AbstractEntity> implements A
 		return clazz;
 	}
 
-	@Override
-	public void salvar(T value) {
+	public T salvar(T value) {
 		if (value.getId() == null) {
 			getEm().persist(value);
+			return value;
 		} else {
-			getEm().merge(value);
+			return getEm().merge(value);
 		}
 	}
 
-	@Override
 	public void remover(T value) {
 		getEm().remove(value);
 	}
 
-	@Override
 	public T buscarPorId(Long id) {
 		return getEm().find(clazz, id);
 	}
 
-	@Override
 	@SuppressWarnings("unchecked")
 	public List<T> buscarTodos() {
 		String jpql = "from " + clazz.getSimpleName();
@@ -56,14 +52,11 @@ public abstract class AbstractServiceImpl<T extends AbstractEntity> implements A
 		return qry.getResultList();
 	}
 
-	@Override
 	public List<T> buscarPorFiltro(Map<String, Object> filtro) {
-		StringBuilder sb = new StringBuilder("FROM ").append(
-				clazz.getSimpleName()).append(" t");
+		StringBuilder sb = new StringBuilder("FROM ").append(clazz.getSimpleName()).append(" t");
 		if (filtro != null && !filtro.isEmpty()) {
 			sb.append(" WHERE ");
-			Iterator<Entry<String, Object>> iterator = filtro.entrySet()
-					.iterator();
+			Iterator<Entry<String, Object>> iterator = filtro.entrySet().iterator();
 			Entry<String, Object> entry;
 			while (iterator.hasNext()) {
 				entry = iterator.next();

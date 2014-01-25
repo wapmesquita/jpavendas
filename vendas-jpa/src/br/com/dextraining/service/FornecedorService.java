@@ -13,7 +13,7 @@ public interface FornecedorService {
 
 	@Loggable("Salvar Fornecedor")
 	@Transaction
-	public abstract void salvar(Fornecedor f);
+	public abstract Fornecedor salvar(Fornecedor f);
 
 	public abstract List<Fornecedor> buscarPorFiltro(Map<String, Object> filtros);
 

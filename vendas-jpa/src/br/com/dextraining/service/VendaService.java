@@ -13,7 +13,7 @@ public interface VendaService {
 
 	@Loggable("Salvar venda")
 	@Transaction
-	public abstract void salvar(Venda venda);
+	public abstract Venda salvar(Venda venda);
 
 	public abstract List<Venda> buscarVendasDoFuncionario(Long funcionarioId);
 
