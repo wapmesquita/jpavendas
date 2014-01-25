@@ -6,11 +6,8 @@ public abstract class AbstractTest {
 	
 	@Before
 	public void before() {
-		EntityManagerFactoryWrapper.init();
 	}
 
 	public void after() {
-		EntityManagerFactoryWrapper.commit();
-		EntityManagerFactoryWrapper.renovar();
 	}
 }

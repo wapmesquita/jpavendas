@@ -1,4 +1,4 @@
-package br.com.dextraining.dao;
+package br.com.dextraining.jpa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

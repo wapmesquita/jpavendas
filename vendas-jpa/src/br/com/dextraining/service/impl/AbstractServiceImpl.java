@@ -9,10 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import br.com.dextraining.dao.EntityManagerFactoryWrapper;
 import br.com.dextraining.domain.AbstractEntity;
+import br.com.dextraining.jpa.EntityManagerFactoryWrapper;
+import br.com.dextraining.service.AbstractService;
 
-public class AbstractServiceImpl<T extends AbstractEntity> {
+public class AbstractServiceImpl<T extends AbstractEntity> implements AbstractService<T> {
 
 	private final Class<T> clazz;
 
@@ -28,6 +29,7 @@ public class AbstractServiceImpl<T extends AbstractEntity> {
 		return clazz;
 	}
 
+	@Override
 	public void salvar(T value) {
 		if (value.getId() == null) {
 			getEm().persist(value);
@@ -36,14 +38,17 @@ public class AbstractServiceImpl<T extends AbstractEntity> {
 		}
 	}
 
+	@Override
 	public void remover(T value) {
 		getEm().remove(value);
 	}
 
+	@Override
 	public T buscarPorId(Long id) {
 		return getEm().find(clazz, id);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<T> buscarTodos() {
 		String jpql = "from " + clazz.getSimpleName();
@@ -51,6 +56,7 @@ public class AbstractServiceImpl<T extends AbstractEntity> {
 		return qry.getResultList();
 	}
 
+	@Override
 	public List<T> buscarPorFiltro(Map<String, Object> filtro) {
 		StringBuilder sb = new StringBuilder("FROM ").append(
 				clazz.getSimpleName()).append(" t");

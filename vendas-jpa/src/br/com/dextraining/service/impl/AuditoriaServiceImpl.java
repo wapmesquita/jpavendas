@@ -2,9 +2,9 @@ package br.com.dextraining.service.impl;
 
 import java.util.Date;
 
-import br.com.dextraining.dao.EntityManagerFactoryWrapper;
 import br.com.dextraining.domain.auditoria.AcaoAuditoria;
 import br.com.dextraining.domain.auditoria.Auditoria;
+import br.com.dextraining.jpa.EntityManagerFactoryWrapper;
 import flexjson.JSONSerializer;
 
 public class AuditoriaServiceImpl {

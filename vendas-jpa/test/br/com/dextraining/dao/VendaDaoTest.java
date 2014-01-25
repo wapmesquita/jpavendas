@@ -16,6 +16,7 @@ import br.com.dextraining.domain.Produto;
 import br.com.dextraining.domain.UF;
 import br.com.dextraining.domain.Venda;
 import br.com.dextraining.domain.query.VendaAcumuladaData;
+import br.com.dextraining.jpa.EntityManagerFactoryWrapper;
 import br.com.dextraining.service.ClienteService;
 import br.com.dextraining.service.FuncionarioService;
 import br.com.dextraining.service.ProdutoService;

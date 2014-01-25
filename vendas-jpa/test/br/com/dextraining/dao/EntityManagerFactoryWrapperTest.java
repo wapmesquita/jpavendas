@@ -8,6 +8,7 @@ import org.junit.Test;
 import br.com.dextraining.domain.Funcionario;
 import br.com.dextraining.domain.UF;
 import br.com.dextraining.domain.Usuario;
+import br.com.dextraining.jpa.EntityManagerFactoryWrapper;
 
 public class EntityManagerFactoryWrapperTest {
 
