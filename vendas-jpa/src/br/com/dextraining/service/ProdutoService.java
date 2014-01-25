@@ -16,11 +16,15 @@ public interface ProdutoService {
 	public abstract List<Produto> buscarProdutorOrdenadorPorValor();
 
 	@Loggable("Atualizando quantidade de produtos")
-	@Transaction
 	public abstract void atualizaQuantidade(Produto produto, Integer value) throws QuantidadeDeProdutosIndisponiveis;
 
 	@Loggable("Salvar Produto")
 	@Transaction
-	public abstract void salvar(Produto p2);
+	public abstract Produto salvar(Produto p2);
+
+	public abstract Produto buscarPorId(Long id);
+
+	@Transaction
+	public abstract void remover(Produto produto);
 
 }

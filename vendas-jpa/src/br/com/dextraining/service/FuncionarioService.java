@@ -10,7 +10,7 @@ public interface FuncionarioService {
 
 	@Loggable("Salvar Funcionario")
 	@Transaction
-	public abstract void salvar(Funcionario value);
+	public abstract Funcionario salvar(Funcionario value);
 
 	public abstract Funcionario buscarPorUsuario(String login);
 
