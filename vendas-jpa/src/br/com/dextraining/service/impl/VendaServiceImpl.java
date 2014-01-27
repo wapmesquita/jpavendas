@@ -12,7 +12,7 @@ import br.com.dextraining.domain.Produto;
 import br.com.dextraining.domain.Venda;
 import br.com.dextraining.domain.query.VendaAcumuladaData;
 import br.com.dextraining.exception.QuantidadeDeProdutosIndisponiveis;
-import br.com.dextraining.service.ProdutoService;
+import br.com.dextraining.service.EstoqueService;
 import br.com.dextraining.service.ServiceFactory;
 import br.com.dextraining.service.VendaService;
 
@@ -28,11 +28,11 @@ public class VendaServiceImpl extends AbstractServiceImpl<Venda> implements Vend
 			throw new RuntimeException("Venda nao pode ser alterada");
 		}
 
-		ProdutoService produtoService = ServiceFactory.service(ProdutoService.class);
+		EstoqueService estoqueService = ServiceFactory.service(EstoqueService.class);
 
 		for (ItemVenda item : venda.getItens()) {
 			try {
-				produtoService.atualizaQuantidade(item.getProduto(), item.getQntd());
+				estoqueService.registrarSaida(item.getProduto(), item.getQntd());
 			} catch (QuantidadeDeProdutosIndisponiveis e) {
 				throw new RuntimeException(e);
 			}

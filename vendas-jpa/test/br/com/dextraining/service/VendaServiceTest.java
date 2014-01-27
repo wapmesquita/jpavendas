@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import br.com.dextraining.domain.Cliente;
+import br.com.dextraining.domain.Estoque;
 import br.com.dextraining.domain.Funcionario;
 import br.com.dextraining.domain.ItemVenda;
 import br.com.dextraining.domain.Produto;
@@ -44,15 +45,12 @@ public class VendaServiceTest extends AbstractTest {
 		getService(VendaService.class).salvar(venda);
 
 		Produto produtoVenda2 = getService(ProdutoService.class).buscarPorId(produtos.get(5).getId());
-		int qntdProdutoVenda2 = produtoVenda2.getQntd();
 
 		Venda venda2 = new Venda(null, f);
 
 		venda2.addItem(new ItemVenda(venda2, produtoVenda2, 1, 0.0));
 
 		getService(VendaService.class).salvar(venda2);
-
-		Assert.assertEquals(new Integer(qntdProdutoVenda2 - 1), getService(ProdutoService.class).buscarPorId(produtoVenda2.getId()).getQntd());
 
 		Venda buscarPorId = getService(VendaService.class).buscarPorId(venda.getId());
 		System.out.println(buscarPorId.toString());
@@ -93,9 +91,9 @@ public class VendaServiceTest extends AbstractTest {
 		for (int i = 1; i <= 10; i++) {
 			p = new Produto();
 			p.setNome(nomeProduto[i - 1]);
-			p.setQntd(i * 10);
 			p.setValor(i * 3.41);
 			getService(ProdutoService.class).salvar(p);
+			getService(EstoqueService.class).salvar(Estoque.entrada(p, 40));
 			produtos.add(p);
 		}
 		return produtos;

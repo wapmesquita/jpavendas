@@ -77,7 +77,6 @@ public abstract class AbstractTest {
 		Produto p1 = new Produto();
 		p1.setDescricao(descricao);
 		p1.setNome(nome);
-		p1.setQntd(qntd);
 		p1.setValor(valor);
 		return p1;
 	}

@@ -24,16 +24,6 @@ public class ProdutoServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testProdutosForaDoEstoque() {
-		Produto p1 = getProduto("Produto 1", "Produto Barato", 0, 37.90);
-
-		getService(ProdutoService.class).salvar(p1);
-
-		List<Produto> lista = getService(ProdutoService.class).buscarProdutosForaEstoque();
-		Assert.assertEquals(p1, lista.get(0));
-	}
-
-	@Test
 	public void buscarProdutosOrdenadorPorValor() {
 		getService(ProdutoService.class).salvar(getProduto("Produto 1", "Produto A", 120, 37.90));
 		getService(ProdutoService.class).salvar(getProduto("Produto 2", "Produto B", 100, 17.90));

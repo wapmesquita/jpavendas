@@ -8,9 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
-
-import br.com.dextraining.exception.QuantidadeDeProdutosIndisponiveis;
 
 @Entity
 public class Produto extends AbstractEntity {
@@ -24,10 +21,7 @@ public class Produto extends AbstractEntity {
 	@Column(nullable = false, precision = 2, scale = 2)
 	private Double valor;
 
-	@Column(nullable = false)
-	private Integer qntd;
-
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	private List<Categoria> categoria;
 
 	public String getNome() {
@@ -54,14 +48,6 @@ public class Produto extends AbstractEntity {
 		this.valor = valor;
 	}
 
-	public Integer getQntd() {
-		return qntd;
-	}
-
-	public void setQntd(Integer qntd) {
-		this.qntd = qntd;
-	}
-
 	public List<Categoria> getCategorias() {
 		if (categoria == null) {
 			categoria = new ArrayList<Categoria>();
@@ -77,12 +63,4 @@ public class Produto extends AbstractEntity {
 		getCategorias().remove(categoria);
 	}
 
-	@Transient
-	public void baixaEstoque(Integer qntd) throws QuantidadeDeProdutosIndisponiveis {
-		this.qntd -= qntd;
-		if (this.qntd < 0) {
-			throw new QuantidadeDeProdutosIndisponiveis();
-		}
-
-	}
 }

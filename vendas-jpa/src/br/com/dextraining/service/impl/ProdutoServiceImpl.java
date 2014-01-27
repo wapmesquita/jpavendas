@@ -7,7 +7,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import br.com.dextraining.domain.Produto;
-import br.com.dextraining.exception.QuantidadeDeProdutosIndisponiveis;
 import br.com.dextraining.service.ProdutoService;
 
 public class ProdutoServiceImpl extends AbstractServiceImpl<Produto> implements ProdutoService {
@@ -28,17 +27,6 @@ public class ProdutoServiceImpl extends AbstractServiceImpl<Produto> implements 
 		}
 	}
 
-	public List<Produto> buscarProdutosForaEstoque() {
-		String jpql = "FROM " + getClazz().getSimpleName() + " t WHERE t.qntd = 0 ORDER BY t.nome";
-		TypedQuery<Produto> qry = getEm().createQuery(jpql, getClazz());
-		try {
-			return qry.getResultList();
-		} catch (NoResultException e) {
-			e.printStackTrace();
-			return Collections.emptyList();
-		}
-	}
-
 	public List<Produto> buscarProdutorOrdenadorPorValor() {
 		String jpql = "FROM " + getClazz().getSimpleName() + " t ORDER BY t.valor";
 		TypedQuery<Produto> qry = getEm().createQuery(jpql, getClazz());
@@ -50,8 +38,4 @@ public class ProdutoServiceImpl extends AbstractServiceImpl<Produto> implements 
 		}
 	}
 
-	public void atualizaQuantidade(Produto produto, Integer value) throws QuantidadeDeProdutosIndisponiveis {
-		produto.baixaEstoque(value);
-		getEm().merge(produto);
-	}
 }
