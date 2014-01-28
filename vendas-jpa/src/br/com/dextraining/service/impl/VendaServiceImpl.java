@@ -86,8 +86,8 @@ public class VendaServiceImpl extends AbstractServiceImpl<Venda> implements Vend
 		StringBuilder sb = new StringBuilder("SELECT new ");
 		sb.append(VendaAcumuladaData.class.getName());
 		sb.append("(v.data, SUM(v.valor)) FROM ");
-		sb.append(Venda.class.getSimpleName());
-		sb.append(" v WHERE v.data BETWEEN :inicio AND :fim");
+		sb.append(Venda.class.getSimpleName()).append(" v ");
+		sb.append(" WHERE v.data BETWEEN :inicio AND :fim");
 		sb.append(" GROUP BY v.data ");
 		sb.append(" HAVING SUM(v.valor) > 10.0");
 		System.out.println(sb.toString());

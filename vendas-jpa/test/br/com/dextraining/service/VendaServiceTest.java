@@ -57,29 +57,31 @@ public class VendaServiceTest extends AbstractTest {
 
 		EntityManagerFactoryWrapper.renovar();
 
-		System.out.println("\n\n\n\nSimulando Lazy");
+		System.out.println("\n\nnSimulando Lazy");
 		buscarPorId = getService(VendaService.class).buscarPorId(1L);
+		System.out.println(buscarPorId);
 		Assert.assertNotNull(buscarPorId);
 		System.out.println(buscarPorId.toString());
-		System.out.println("Simulando Lazy\n\n\n\n");
 
-		System.out.println("Buscar por Funcionario");
+		System.out.println("\n\nBuscar por Funcionario");
 		List<Venda> vendasFuncionario = getService(VendaService.class).buscarVendasDoFuncionario(f.getId());
 		Assert.assertEquals(vendasFuncionario.get(0), buscarPorId);
 		Assert.assertEquals(7, vendasFuncionario.get(0).getItens().size());
 
-		System.out.println("Buscar por Cliente");
+		System.out.println("\n\nBuscar por Cliente");
 		List<Venda> vendasCliente = getService(VendaService.class).buscarVendasParaCliente(c.getId());
+		System.out.println(vendasCliente.get(0));
 		Assert.assertEquals(vendasCliente.get(0), buscarPorId);
 
-		System.out.println("Buscar por Produto");
+		System.out.println("\n\nBuscar por Produto");
 		List<Venda> vendasDoProduto = getService(VendaService.class).buscarVendasDoProduto(produtos.get(3));
 		Assert.assertEquals(vendasDoProduto.get(0), buscarPorId);
+		System.out.println(vendasDoProduto.get(0));
 
-		System.out.println("Buscar por Acumuladas");
+		System.out.println("\n\nBuscar por Acumuladas");
 		List<VendaAcumuladaData> acumuladas = getService(VendaService.class).buscarVendaAcumuladas(getOutraDate(-1), getOutraDate(1));
-//		Assert.assertEquals(1, acumuladas.size());
-//		Assert.assertEquals(new Double(1572.8948000000003), acumuladas.get(0).getValor());
+		Assert.assertEquals(1, acumuladas.size());
+		Assert.assertEquals(new Double(1572.8948000000003), acumuladas.get(0).getValor());
 
 		getService(VendaService.class).remover(buscarPorId);
 	}
@@ -101,7 +103,7 @@ public class VendaServiceTest extends AbstractTest {
 
 	private Date getOutraDate(int key) {
 		Calendar cal = GregorianCalendar.getInstance();
-		cal.roll(Calendar.MONTH, key);
+		cal.roll(Calendar.YEAR, key);
 		return cal.getTime();
 	}
 }
