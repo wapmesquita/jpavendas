@@ -12,21 +12,16 @@ public class ServiceHook implements InvocationHandler {
 	private String logMessage;
 	private boolean loggable = false;
 	private boolean transaction = false;
+	private Object instance;
+
+	public ServiceHook(Object instance) {
+		this.instance = instance;
+    }
 
 	@Override
-	public Object invoke(Object object, Method method, Object[] args)
-			throws Throwable {
-		Class<?> clazz = method.getDeclaringClass();
-
+	public Object invoke(Object object, Method method, Object[] args) throws Throwable {
 		before(method);
-
-		String name = clazz.getName();
-		String pack = name.substring(0, name.indexOf(clazz.getSimpleName()));
-
 		try {
-			Object instance = Class.forName(
-					pack + "impl." + clazz.getSimpleName() + "Impl")
-					.newInstance();
 			return method.invoke(instance, args);
 		} finally {
 			after();
